@@ -1,0 +1,10 @@
+{
+  "clusterEnv": "prod",
+  "ingress": "https://familie-ks-infotrygd.prod-fss-pub.nais.io",
+  "datasourceUrl": "jdbc:oracle:thin:@a01dbfl037.adeo.no:1521/cdc",
+  "schema": "REST_READ_P",
+  "azure": {
+    "tenant": "nav.no"
+  },
+  "whitelist": ""
+}

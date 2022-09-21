@@ -1,0 +1,42 @@
+server.port: 8080
+
+spring:
+  application:
+    name: ${NAIS_APP_NAME:infotrygd-kontantstotte-v2}
+  datasource:
+    url: ${APP_DATASOURCE_URL}
+    username: ${APP_DATASOURCE_USERNAME}
+    password: ${APP_DATASOURCE_PASSWORD}
+    platform: ${APP_DATASOURCE_PLATFORM}
+    driver-class-name: ${APP_DATASOURCE_DRIVER}
+  jpa:
+    # For Oracle: database-platform: org.hibernate.dialect.Oracle10gDialect
+    database-platform: ${APP_JPA_PLATFORM}
+    hibernate:
+      ddl-auto: ${APP_DDL_AUTO:validate}
+    properties:
+      hibernate:
+        default_schema: ${APP_DEFAULT_SCHEMA}
+
+management:
+  endpoint:
+    health:
+      show-details: ALWAYS
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+
+#oidc...
+http.proxy.parametername: notused
+
+no.nav.security.jwt:
+  expirythreshold: 60 #threshold in minutes until token expires
+  issuer:
+    azure:
+      discoveryurl: ${AZURE_APP_WELL_KNOWN_URL}
+      accepted_audience: ${AZURE_APP_CLIENT_ID}
+      proxyurl: ${APP_AZURE_PROXY_URL}
+app:
+  security:
+    clientWhitelist: ${APP_CLIENT_WHITELIST}
