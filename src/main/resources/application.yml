@@ -2,7 +2,7 @@ server.port: 8080
 
 spring:
   application:
-    name: ${NAIS_APP_NAME:infotrygd-kontantstotte-v2}
+    name: ${NAIS_APP_NAME:familie-ks-infotrygd}
   datasource:
     url: ${APP_DATASOURCE_URL}
     username: ${APP_DATASOURCE_USERNAME}

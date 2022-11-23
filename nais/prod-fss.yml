@@ -40,6 +40,9 @@ spec:
   - "{{ingress}}"
   vault:
     enabled: true
+    paths:
+      - kvPath: /oracle/data/dev/creds/ks_infotrygd_q1-user
+        mountPath: /var/run/secrets/oracle/creds
   accessPolicy:
     inbound:
       rules:
@@ -76,6 +79,10 @@ spec:
       value: "org.hibernate.dialect.Oracle10gDialect"
     - name: "APP_DEFAULT_SCHEMA"
       value: "{{schema}}"
+    - name: "APP_DATASOURCE_USERNAME_PATH"
+      value: "/var/run/secrets/oracle/creds/username"
+    - name: "APP_DATASOURCE_PASSWORD_PATH"
+      value: "/var/run/secrets/oracle/creds/password"
     - name: "APP_DDL_AUTO"
       value: "none"
 
