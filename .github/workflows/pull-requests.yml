@@ -23,7 +23,7 @@ jobs:
       - name: Test and build
         env:
           GPR_API_KEY: ${{ secrets.GITHUB_TOKEN }}
-        run: ./gradlew test build
+        run: mvn clean verify
       - name: Build docker image
         run: |
           docker build -t $IMAGE .
