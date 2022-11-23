@@ -1,8 +1,8 @@
 {
   "clusterEnv": "dev",
   "ingress": "https://familie-ks-infotrygd.dev-fss-pub.nais.io",
-  "datasourceUrl": "jdbc:oracle:thin:@a01dbfl033.adeo.no:1521/cdcq",
-  "schema": "REST_READ_Q1",
+  "datasourceUrl": "jdbc:oracle:thin:@a01dbfl033.adeo.no:1521/infotrygd_ksq",
+  "schema": "INFOTRYGD_KSQ",
   "azure": {
     "tenant": "trygdeetaten.no"
   },
