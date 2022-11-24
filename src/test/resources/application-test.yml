@@ -35,3 +35,7 @@ no.nav.security.jwt:
 app:
   security:
     clientWhitelist: "sts/12345678910,isso/12345678910,azure/12345678910"
+
+NAIS_APP_NAME: familie-ks-infotrygd
+AZURE_APP_CLIENT_ID: testid
+AZURE_APP_CLIENT_SECRET: testsecret

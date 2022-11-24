@@ -12,10 +12,10 @@ class TestClient(private val restTemplate: RestTemplate) {
     }
 
     fun hentPerioder(req: InnsynRequest): InnsynResponse {
-        return restTemplate.postForObject("/hentPerioder", req)
+        return restTemplate.postForObject("/api/hentPerioder", req)
     }
 
     fun harKontantstotteIInfotrygd(req: InnsynRequest): Boolean {
-        return restTemplate.postForObject("/harKontantstotte", req)
+        return restTemplate.postForObject("/api/harKontantstotte", req)
     }
 }

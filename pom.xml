@@ -20,7 +20,7 @@
 		<testcontainers.version>1.16.2</testcontainers.version>
 		<token-validation.version>2.0.14</token-validation.version>
 		<datasource-proxy.version>1.7</datasource-proxy.version>
-		<springdoc-openapi-ui.version>1.6.8</springdoc-openapi-ui.version>
+		<springdoc-openapi.version>1.6.8</springdoc-openapi.version>
 		<httpclient.version>4.5.13</httpclient.version>
 		<logstash-logback-encoder.version>7.0.1</logstash-logback-encoder.version>
 		<logback-syslog4j.version>1.0.0</logback-syslog4j.version>
@@ -93,7 +93,12 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>${springdoc-openapi-ui.version}</version>
+			<version>${springdoc-openapi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-kotlin</artifactId>
+			<version>${springdoc-openapi.version}</version>
 		</dependency>
 
 		<dependency>

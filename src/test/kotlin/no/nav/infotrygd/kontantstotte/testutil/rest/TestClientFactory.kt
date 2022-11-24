@@ -28,10 +28,11 @@ class TestClientFactory(
 ) {
 
     fun get(port: Int, sub: String = "12345678910"): TestClient {
-        val grupper = mutableListOf<String>()
+        val grupper = listOf<String>("gruppe-123")
+        val roller = listOf<String>("access_as_application")
         return TestClient(
             restTemplateBuilder(port)
-                .additionalInterceptors(MockOAuth2ServerAccessTokenInterceptor(grupper, sub))
+                .additionalInterceptors(MockOAuth2ServerAccessTokenInterceptor(grupper, roller, sub))
                 .build()
         )
     }
@@ -71,7 +72,7 @@ class TestClientFactory(
         }
     }
 
-    private inner class MockOAuth2ServerAccessTokenInterceptor(private val grupper: List<String>, val sub: String) : ClientHttpRequestInterceptor {
+    private inner class MockOAuth2ServerAccessTokenInterceptor(private val grupper: List<String>, private val roller: List<String>, val sub: String) : ClientHttpRequestInterceptor {
         override fun intercept(
             request: HttpRequest,
             body: ByteArray,
@@ -81,7 +82,7 @@ class TestClientFactory(
                 issuerId = "issuer1",
                 audience = "aud-localhost",
                 subject = sub,
-                claims = mapOf("groups" to grupper)
+                claims = mapOf("groups" to grupper, "roles" to roller )
             )
             request.headers.setBearerAuth(token.serialize())
             return execution.execute(request, body)

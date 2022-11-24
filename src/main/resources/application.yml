@@ -40,3 +40,20 @@ no.nav.security.jwt:
 app:
   security:
     clientWhitelist: ${APP_CLIENT_WHITELIST}
+
+springdoc:
+  packages-to-scan: "no.nav.familie.ks.sak"
+  paths-to-match: "/api/**"
+  swagger-ui:
+    oauth:
+      use-pkce-with-authorization-code-grant: true
+      client-id: ${AZURE_APP_CLIENT_ID}
+      scope-separator: ","
+    disable-swagger-default-url: true
+
+# Swagger
+AUTHORIZATION_URL: https://login.microsoftonline.com/navq.onmicrosoft.com/oauth2/v2.0/authorize
+TOKEN_URL: https://login.microsoftonline.com/navq.onmicrosoft.com/oauth2/v2.0/token
+API_SCOPE: api://${AZURE_APP_CLIENT_ID}/.default
+
+TEAMFAMILIE_FORVALTNING_GROUP_ID: "c62e908a-cf20-4ad0-b7b3-3ff6ca4bf38b"

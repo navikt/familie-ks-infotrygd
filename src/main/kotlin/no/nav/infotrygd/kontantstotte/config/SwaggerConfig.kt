@@ -6,7 +6,6 @@ import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.security.*
 import no.nav.infotrygd.kontantstotte.Profiles
-import no.nav.security.token.support.core.configuration.MultiIssuerConfiguration
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -23,34 +22,22 @@ private data class OAuthInfo(
 @Configuration
 @Profile("!${Profiles.NOAUTH}")
 class SwaggerConfig(
-    @Value("\${no.nav.security.jwt.issuer.azure.accepted_audience}")
-    private val clientId: String,
-
-    private val p: MultiIssuerConfiguration
+    @Value("\${AUTHORIZATION_URL}")
+    val authorizationUrl: String,
+    @Value("\${TOKEN_URL}")
+    val tokenUrl: String,
+    @Value("\${API_SCOPE}")
+    val apiScope: String
 ) {
 
-    private val apiScope: String = "api://${clientId}/.default"
-
     @Bean
-    fun openApi(): OpenAPI {
-        val metaData = p.getIssuer("azure").get().metaData
-
-        val info = OAuthInfo(
-            authorizationEndpoint = metaData.authorizationEndpointURI.toString(),
-            tokenEndpoint = metaData.tokenEndpointURI.toString()
-        )
-
-        return OpenAPI().info(Info().title("KS Infotrygd API (v2)"))
-            .components(
-                Components()
-                    .addSecuritySchemes("oauth2", oauth2SecurityScheme(info))
-                    .addSecuritySchemes("bearer", bearerTokenSecurityScheme())
-            )
+    fun kontantstøtteInfotrygdApi(): OpenAPI {
+        return OpenAPI().info(Info().title("Kontantstøtte infotrygd API").version("v1"))
+            .components(Components().addSecuritySchemes("oauth2", securitySchemes()))
             .addSecurityItem(SecurityRequirement().addList("oauth2", listOf("read", "write")))
-            .addSecurityItem(SecurityRequirement().addList("bearer", listOf("read", "write")))
     }
 
-    private fun oauth2SecurityScheme(info: OAuthInfo): SecurityScheme {
+    private fun securitySchemes(): SecurityScheme {
         return SecurityScheme()
             .name("oauth2")
             .type(SecurityScheme.Type.OAUTH2)
@@ -59,12 +46,11 @@ class SwaggerConfig(
             .flows(
                 OAuthFlows()
                     .authorizationCode(
-                        OAuthFlow().authorizationUrl(info.authorizationEndpoint)
-                            .tokenUrl(info.tokenEndpoint)
+                        OAuthFlow().authorizationUrl(authorizationUrl)
+                            .tokenUrl(tokenUrl)
                             .scopes(Scopes().addString(apiScope, "read,write"))
                     )
             )
-
     }
 
     private fun bearerTokenSecurityScheme(): SecurityScheme {
@@ -75,5 +61,4 @@ class SwaggerConfig(
             .`in`(SecurityScheme.In.HEADER)
             .name("Authorization")
     }
-
 }
