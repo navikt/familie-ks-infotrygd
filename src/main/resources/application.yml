@@ -42,7 +42,7 @@ app:
     clientWhitelist: ${APP_CLIENT_WHITELIST}
 
 springdoc:
-  packages-to-scan: "no.nav.familie.ks.sak"
+  packages-to-scan: "no.nav.infotrygd.kontantstotte"
   paths-to-match: "/api/**"
   swagger-ui:
     oauth:
