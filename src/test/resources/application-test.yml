@@ -17,24 +17,11 @@ spring:
 no.nav.security.jwt:
   expirythreshold: 60 #threshold in minutes until token expires
   issuer:
-    azure:
-      discoveryurl: http://localhost:${mock-oauth2-server.port}/issuer1/.well-known/openid-configuration
-      accepted_audience: aud-localhost
+    azuread:
+      discoveryurl: http://localhost:${mock-oauth2-server.port}/azuread/.well-known/openid-configuration
+      accepted_audience: familie-ks-infotrygd-test
       proxyurl: ~
       cookiename: localhost-idtoken
-    sts:
-      discoveryurl: http://localhost:${mock-oauth2-server.port}/issuer1/.well-known/openid-configuration
-      accepted_audience: aud-localhost
-      proxyurl: ~
-      cookiename: localhost-idtoken
-    isso:
-      discoveryurl: http://localhost:${mock-oauth2-server.port}/issuer1/.well-known/openid-configuration
-      accepted_audience: aud-localhost
-      proxyurl: ~
-      cookiename: localhost-idtoken
-app:
-  security:
-    clientWhitelist: "sts/12345678910,isso/12345678910,azure/12345678910"
 
 NAIS_APP_NAME: familie-ks-infotrygd
 AZURE_APP_CLIENT_ID: testid

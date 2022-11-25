@@ -1,6 +1,8 @@
 package no.nav.infotrygd.kontantstotte.testutil.rest
 
+import com.nimbusds.jose.JOSEObjectType
 import no.nav.security.mock.oauth2.MockOAuth2Server
+import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpMethod
@@ -79,10 +81,15 @@ class TestClientFactory(
             execution: ClientHttpRequestExecution
         ): ClientHttpResponse {
             val token = server.issueToken(
-                issuerId = "issuer1",
-                audience = "aud-localhost",
-                subject = sub,
-                claims = mapOf("groups" to grupper, "roles" to roller )
+                issuerId = "azuread",
+                "theclientid",
+                DefaultOAuth2TokenCallback(
+                    issuerId = "azuread",
+                    subject = sub,
+                    audience = listOf("familie-ks-infotrygd-test"),
+                    typeHeader = JOSEObjectType.JWT.type,
+                    claims = mapOf("groups" to grupper, "roles" to roller)
+                )
             )
             request.headers.setBearerAuth(token.serialize())
             return execution.execute(request, body)

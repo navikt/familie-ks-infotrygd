@@ -33,13 +33,10 @@ http.proxy.parametername: notused
 no.nav.security.jwt:
   expirythreshold: 60 #threshold in minutes until token expires
   issuer:
-    azure:
+    azuread:
       discoveryurl: ${AZURE_APP_WELL_KNOWN_URL}
       accepted_audience: ${AZURE_APP_CLIENT_ID}
       proxyurl: ${APP_AZURE_PROXY_URL}
-app:
-  security:
-    clientWhitelist: ${APP_CLIENT_WHITELIST}
 
 springdoc:
   packages-to-scan: "no.nav.infotrygd.kontantstotte"
