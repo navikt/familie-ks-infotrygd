@@ -1,6 +1,8 @@
 package no.nav.infotrygd.kontantstotte.testutil.rest
 
+import com.nimbusds.jose.JOSEObjectType
 import no.nav.security.mock.oauth2.MockOAuth2Server
+import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpMethod
@@ -28,10 +30,11 @@ class TestClientFactory(
 ) {
 
     fun get(port: Int, sub: String = "12345678910"): TestClient {
-        val grupper = mutableListOf<String>()
+        val grupper = listOf<String>("gruppe-123")
+        val roller = listOf<String>("access_as_application")
         return TestClient(
             restTemplateBuilder(port)
-                .additionalInterceptors(MockOAuth2ServerAccessTokenInterceptor(grupper, sub))
+                .additionalInterceptors(MockOAuth2ServerAccessTokenInterceptor(grupper, roller, sub))
                 .build()
         )
     }
@@ -71,17 +74,22 @@ class TestClientFactory(
         }
     }
 
-    private inner class MockOAuth2ServerAccessTokenInterceptor(private val grupper: List<String>, val sub: String) : ClientHttpRequestInterceptor {
+    private inner class MockOAuth2ServerAccessTokenInterceptor(private val grupper: List<String>, private val roller: List<String>, val sub: String) : ClientHttpRequestInterceptor {
         override fun intercept(
             request: HttpRequest,
             body: ByteArray,
             execution: ClientHttpRequestExecution
         ): ClientHttpResponse {
             val token = server.issueToken(
-                issuerId = "issuer1",
-                audience = "aud-localhost",
-                subject = sub,
-                claims = mapOf("groups" to grupper)
+                issuerId = "azuread",
+                "theclientid",
+                DefaultOAuth2TokenCallback(
+                    issuerId = "azuread",
+                    subject = sub,
+                    audience = listOf("familie-ks-infotrygd-test"),
+                    typeHeader = JOSEObjectType.JWT.type,
+                    claims = mapOf("groups" to grupper, "roles" to roller)
+                )
             )
             request.headers.setBearerAuth(token.serialize())
             return execution.execute(request, body)

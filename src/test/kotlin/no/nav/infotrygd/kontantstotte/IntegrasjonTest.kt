@@ -1,5 +1,6 @@
 package no.nav.infotrygd.kontantstotte
 
+import com.nimbusds.jose.JOSEObjectType
 import no.nav.infotrygd.kontantstotte.dto.InnsynRequest
 import no.nav.infotrygd.kontantstotte.model.ks.Barn
 import no.nav.infotrygd.kontantstotte.repository.StonadRepository
@@ -7,6 +8,8 @@ import no.nav.infotrygd.kontantstotte.testutil.StonadFactory
 import no.nav.infotrygd.kontantstotte.testutil.TestData
 import no.nav.infotrygd.kontantstotte.testutil.rest.TestClientException
 import no.nav.infotrygd.kontantstotte.testutil.rest.TestClientFactory
+import no.nav.security.mock.oauth2.MockOAuth2Server
+import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -25,6 +28,9 @@ internal class IntegrasjonTest {
 
     @Autowired
     private lateinit var testClientFactory: TestClientFactory
+
+    @Autowired
+    private lateinit var mockOAuth2Server: MockOAuth2Server
 
     @Autowired
     private lateinit var stonadRepository: StonadRepository
@@ -60,10 +66,6 @@ internal class IntegrasjonTest {
         val e = assertThrows<TestClientException> { testClientFactory.getNoAuth(port).hentPerioder(InnsynRequest(fnr = listOf(TestData.foedselsNr()))) }
         assertThat(e.status).isEqualTo(HttpStatus.UNAUTHORIZED)
     }
-
-    @Test
-    internal fun `hentPerioder feil sub`() {
-        val e = assertThrows<TestClientException> { testClientFactory.get(port, sub = "feil").hentPerioder(InnsynRequest(fnr = listOf(TestData.foedselsNr()))) }
-        assertThat(e.status).isEqualTo(HttpStatus.FORBIDDEN)
-    }
 }
+
+

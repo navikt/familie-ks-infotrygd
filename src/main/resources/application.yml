@@ -33,10 +33,24 @@ http.proxy.parametername: notused
 no.nav.security.jwt:
   expirythreshold: 60 #threshold in minutes until token expires
   issuer:
-    azure:
+    azuread:
       discoveryurl: ${AZURE_APP_WELL_KNOWN_URL}
       accepted_audience: ${AZURE_APP_CLIENT_ID}
       proxyurl: ${APP_AZURE_PROXY_URL}
-app:
-  security:
-    clientWhitelist: ${APP_CLIENT_WHITELIST}
+
+springdoc:
+  packages-to-scan: "no.nav.infotrygd.kontantstotte"
+  paths-to-match: "/api/**"
+  swagger-ui:
+    oauth:
+      use-pkce-with-authorization-code-grant: true
+      client-id: ${AZURE_APP_CLIENT_ID}
+      scope-separator: ","
+    disable-swagger-default-url: true
+
+# Swagger
+AUTHORIZATION_URL: https://login.microsoftonline.com/navq.onmicrosoft.com/oauth2/v2.0/authorize
+TOKEN_URL: https://login.microsoftonline.com/navq.onmicrosoft.com/oauth2/v2.0/token
+API_SCOPE: api://${AZURE_APP_CLIENT_ID}/.default
+
+TEAMFAMILIE_FORVALTNING_GROUP_ID: "c7e0b108-7ae6-432c-9ab4-946174c240c0"

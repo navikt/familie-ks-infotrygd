@@ -10,7 +10,7 @@ spec:
   port: 8080 # Required. The port number which is exposed by the container and should receive HTTP traffic.
   liveness: # HTTP endpoint that signals 200 OK when the application is running.
     path: /actuator/health
-    initialDelay: 120
+    initialDelay: 10
     timeout: 1
     periodSeconds: 5     # How often (in seconds) to perform the probe. Default to 10 seconds
     failureThreshold: 10 # when a Pod starts and the probe fails,
@@ -19,11 +19,11 @@ spec:
   readiness: # HTTP endpoint that signals 200 OK when it is okay to start routing traffic to the application.
     path: /actuator/health
     # /rest/internal/isAlive
-    initialDelay: 120
+    initialDelay: 20
     timeout: 1
   replicas: # Optional. Set min = max to disable autoscaling.
-    min: 2 # minimum number of replicas.
-    max: 4 # maximum number of replicas.
+    min: 1 # minimum number of replicas.
+    max: 1 # maximum number of replicas.
     cpuThresholdPercentage: 50 # total cpu percentage threshold on deployment, at which point it will increase number of pods if current < max
   prometheus: # Optional.
     enabled: true # if true the pod will be scraped for metrics by prometheus
@@ -63,8 +63,13 @@ spec:
       claims:
         extra:
           - "NAVident"
-#        groups:
-#          - id: "" # todo: legg til testrolle her
+        groups:
+          - id: "c62e908a-cf20-4ad0-b7b3-3ff6ca4bf38b"
+          - id: "928636f4-fd0d-4149-978e-a6fb68bb19de"  # 0000-GA-STDAPPS
+          - id: "71f503a2-c28f-4394-a05a-8da263ceca4a"  # VEILEDER_ROLLE
+          - id: "c7e0b108-7ae6-432c-9ab4-946174c240c0"  # SAKSBEHANDLER_ROLLE
+          - id: "52fe1bef-224f-49df-a40a-29f92d4520f8"  # BESLUTTER_ROLLE
+
       tenant: trygdeetaten.no
       replyURLs:
         - "https://familie-ks-infotrygd.dev.intern.nav.no/swagger-ui/oauth2-redirect.html"
