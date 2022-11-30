@@ -54,7 +54,7 @@ spec:
           namespace: bidrag
           cluster: dev-gcp
         - application: "familie-ks-sak"
-          namespace: familie
+          namespace: teamfamilie
           cluster: dev-gcp
   azure:
     application:
