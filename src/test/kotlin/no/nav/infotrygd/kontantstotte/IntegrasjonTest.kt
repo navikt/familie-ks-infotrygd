@@ -55,7 +55,7 @@ internal class IntegrasjonTest {
         stonadRepository.save(stonad)
 
         val res = testClientFactory.get(port).harKontantstotteIInfotrygd(InnsynRequest(
-            barn = listOf(stonad.barn.first().fnr.toString())
+            barn = listOf(stonad.barn.first().fnr.asString)
         ))
 
         assertThat(res).isEqualTo(true)
