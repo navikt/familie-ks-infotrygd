@@ -53,7 +53,7 @@ spec:
           namespace: bidrag
           cluster: prod-gcp
         - application: "familie-ks-sak"
-          namespace: familie
+          namespace: teamfamilie
           cluster: prod-gcp
   azure:
     application:
