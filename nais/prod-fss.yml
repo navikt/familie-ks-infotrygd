@@ -41,7 +41,7 @@ spec:
   vault:
     enabled: true
     paths:
-      - kvPath: /oracle/data/dev/creds/ks_infotrygd_p-user
+      - kvPath: /oracle/data/prod/creds/ks_infotrygd_p-user
         mountPath: /var/run/secrets/oracle/creds
   accessPolicy:
     inbound:
