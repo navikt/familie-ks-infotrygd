@@ -38,11 +38,11 @@ internal class IntegrasjonTest {
     @Test
     fun hentPerioder() {
         val sf = StonadFactory()
-        val stonad = sf.stonad()
+        val stonad = sf.stonad(barnEksempler = listOf(sf.barn()))
         stonadRepository.save(stonad)
 
         val res = testClientFactory.get(port).hentPerioder(InnsynRequest(
-            barn = listOf(stonad.fnr.asString)
+            barn = listOf(stonad.barn[0].fnr.asString)
         ))
 
         assertThat(res.data).hasSameSizeAs(listOf(stonad))

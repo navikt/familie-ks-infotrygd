@@ -12,8 +12,16 @@ class InnsynService(
     private val stonadRepository: StonadRepository,
     private val barnRepository: BarnRepository
 ) {
-    fun hentData(req: InnsynRequest): InnsynResponse {
+    fun hentDataForSøker(req: InnsynRequest): InnsynResponse {
         val stonader = stonadRepository.findByFnrIn(req.barn.tilFoedselsnummere())
+        return InnsynResponse(
+            data = stonader.map { it.toDto() }
+        )
+    }
+
+    fun hentDataForBarn(req: InnsynRequest): InnsynResponse {
+        val barna = barnRepository.findByFnrIn(req.barn.tilFoedselsnummere())
+        val stonader = stonadRepository.findByBarnIn(barna)
         return InnsynResponse(
             data = stonader.map { it.toDto() }
         )
