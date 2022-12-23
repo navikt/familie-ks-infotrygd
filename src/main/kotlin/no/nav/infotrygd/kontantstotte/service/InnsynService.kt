@@ -5,6 +5,7 @@ import no.nav.infotrygd.kontantstotte.dto.*
 import no.nav.infotrygd.kontantstotte.model.ks.Stonad
 import no.nav.infotrygd.kontantstotte.repository.BarnRepository
 import no.nav.infotrygd.kontantstotte.repository.StonadRepository
+import no.nav.infotrygd.kontantstotte.utils.reversert
 import org.springframework.stereotype.Service
 
 @Service
@@ -43,7 +44,7 @@ private fun Stonad.toDto(): StonadDto {
         belop = this.belop,
         barn = this.barn.map {
             BarnDto(
-                fnr = it.fnr
+                fnr = Foedselsnummer.tilReversert(it.fnr.asString)
             )
         }
     )
