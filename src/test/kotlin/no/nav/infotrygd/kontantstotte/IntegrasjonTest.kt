@@ -8,6 +8,7 @@ import no.nav.infotrygd.kontantstotte.testutil.StonadFactory
 import no.nav.infotrygd.kontantstotte.testutil.TestData
 import no.nav.infotrygd.kontantstotte.testutil.rest.TestClientException
 import no.nav.infotrygd.kontantstotte.testutil.rest.TestClientFactory
+import no.nav.infotrygd.kontantstotte.utils.reversert
 import no.nav.security.mock.oauth2.MockOAuth2Server
 import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback
 import org.assertj.core.api.Assertions.assertThat
@@ -42,7 +43,7 @@ internal class IntegrasjonTest {
         stonadRepository.save(stonad)
 
         val res = testClientFactory.get(port).hentPerioder(InnsynRequest(
-            barn = listOf(stonad.barn[0].fnr.asString)
+            barn = listOf(stonad.barn[0].fnr.reversert)
         ))
 
         assertThat(res.data).hasSameSizeAs(listOf(stonad))
@@ -55,7 +56,7 @@ internal class IntegrasjonTest {
         stonadRepository.save(stonad)
 
         val res = testClientFactory.get(port).harKontantstotteIInfotrygd(InnsynRequest(
-            barn = listOf(stonad.barn.first().fnr.asString)
+            barn = listOf(stonad.barn.first().fnr.reversert)
         ))
 
         assertThat(res).isEqualTo(true)
