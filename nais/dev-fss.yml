@@ -94,6 +94,3 @@ spec:
 
     - name: "APP_AZURE_PROXY_URL"
       value: "https://webproxy-nais.nav.no:8088"
-
-    - name: "APP_CLIENT_WHITELIST"
-      value: "azure/ce6d7e45-f144-4787-ace9-ae96b6c03aec" # todo fjenre og legg inn access_as_application
