@@ -23,7 +23,7 @@ class InnsynController(
     @PostMapping("/hentPerioderMedKontantstøtteIInfotrygd")
     fun hentPerioder(@RequestBody req: InnsynRequest): InnsynResponse {
         tilgangskontrollService.sjekkTilgang()
-        return innsynService.hentDataForBarn(req)
+        return innsynService.hentDataForSøker(req)
     }
 
     @PostMapping("/harLøpendeKontantstotteIInfotrygd")
