@@ -1,11 +1,17 @@
 package no.nav.infotrygd.kontantstotte.service
 
 import no.nav.commons.foedselsnummer.Foedselsnummer
-import no.nav.infotrygd.kontantstotte.dto.*
+import no.nav.infotrygd.kontantstotte.dto.BarnDto
+import no.nav.infotrygd.kontantstotte.dto.InnsynRequest
+import no.nav.infotrygd.kontantstotte.dto.InnsynResponse
+import no.nav.infotrygd.kontantstotte.dto.StonadDto
+import no.nav.infotrygd.kontantstotte.dto.tilFoedselsnummere
+import no.nav.infotrygd.kontantstotte.dto.tilReversert
 import no.nav.infotrygd.kontantstotte.model.ks.Stonad
 import no.nav.infotrygd.kontantstotte.repository.BarnRepository
 import no.nav.infotrygd.kontantstotte.repository.StonadRepository
-import no.nav.infotrygd.kontantstotte.utils.reversert
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
@@ -31,8 +37,15 @@ class InnsynService(
     fun harKontantstotte(req: InnsynRequest): Boolean {
         val barna = barnRepository.findByFnrIn(req.barn.tilFoedselsnummere())
         val stonader = stonadRepository.findByBarnIn(barna)
+        logger.info("Fant ${stonader.size} for barna")
+        secureLogger.info("Fant ${stonader.size} for barna $barna")
 
         return stonader.isNotEmpty()
+    }
+
+    companion object {
+        private val logger = LoggerFactory.getLogger(InnsynService::class.java)
+        private val secureLogger: Logger = LoggerFactory.getLogger("secureLogger")
     }
 }
 
@@ -42,10 +55,6 @@ private fun Stonad.toDto(): StonadDto {
         fom = this.fom,
         tom = this.tom,
         belop = this.belop,
-        barn = this.barn.map {
-            BarnDto(
-                fnr = Foedselsnummer.tilReversert(it.fnr.asString)
-            )
-        }
+        barn = this.barn.map { BarnDto(fnr = Foedselsnummer.tilReversert(it.fnr.asString)) }
     )
 }

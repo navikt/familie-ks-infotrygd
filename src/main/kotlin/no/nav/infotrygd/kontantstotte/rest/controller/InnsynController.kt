@@ -24,7 +24,7 @@ class InnsynController(
     fun hentPerioder(@RequestBody req: InnsynRequest): InnsynResponse {
         tilgangskontrollService.sjekkTilgang()
 
-        //TODO: Bytt tilbake til hentDataForSøker når test er fikset
+        // TODO: Bytt tilbake til hentDataForSøker når test er fikset
         return innsynService.hentDataForBarn(req)
     }
 
