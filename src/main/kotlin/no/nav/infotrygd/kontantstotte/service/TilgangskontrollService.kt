@@ -9,6 +9,7 @@ import org.springframework.web.server.ResponseStatusException
 @Service
 class TilgangskontrollService(
     private val tokenValidationContextHolder: TokenValidationContextHolder,
+    @Value("\${TEAMFAMILIE_SAKSBEHANDLER_GROUP_ID}") private val saksbehandlerGroupId: String,
     @Value("\${TEAMFAMILIE_FORVALTNING_GROUP_ID}") private val forvalterGroupId: String
 ) {
 
@@ -20,7 +21,7 @@ class TilgangskontrollService(
             it.getAsList("groups")
         }.orElse(emptyList())
 
-        if (!roles.contains(ACCESS_AS_APPLICATION_ROLE) && !groups.contains(forvalterGroupId)) {
+        if (!(roles.contains(ACCESS_AS_APPLICATION_ROLE) || roles.contains(saksbehandlerGroupId) || groups.contains(forvalterGroupId))) {
             throw ResponseStatusException(HttpStatus.FORBIDDEN, "User har ikke tilgang til å kalle tjenesten!")
         }
     }
