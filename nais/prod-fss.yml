@@ -38,6 +38,8 @@ spec:
       memory: 1024Mi
   ingresses:
   - "https://familie-ks-infotrygd.prod-fss-pub.nais.io"
+  secureLogs:
+    enabled: true
   vault:
     enabled: true
     paths:
