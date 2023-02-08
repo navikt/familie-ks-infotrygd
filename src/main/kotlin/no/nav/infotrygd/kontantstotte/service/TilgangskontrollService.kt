@@ -27,7 +27,7 @@ class TilgangskontrollService(
 
         secureLogger.info("Roller: $roles")
         secureLogger.info("Grupper: $groups")
-        if (!(roles.contains(ACCESS_AS_APPLICATION_ROLE) || roles.contains(saksbehandlerGroupId) || groups.contains(forvalterGroupId))) {
+        if (!(roles.contains(ACCESS_AS_APPLICATION_ROLE) || groups.contains(saksbehandlerGroupId) || groups.contains(forvalterGroupId))) {
             throw ResponseStatusException(HttpStatus.FORBIDDEN, "User har ikke tilgang til å kalle tjenesten!")
         }
     }
