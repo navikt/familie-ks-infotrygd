@@ -22,7 +22,7 @@ class NavCharYearMonthConverter : AttributeConverter<YearMonth?, String?> {
             return null
         }
         val (maanedStr, aarStr) = try {
-            """^(\d\d)(\d\d\d\d)$""".toRegex().find(dbData)!!.destructured
+            """^(\d\d)(\d\d\d\d)$""".toRegex().find("%06d".format(dbData.toInt()))!!.destructured
         } catch (e: Exception) {
             logger.warn("Ukjent databaseverdi. Forventet år/måned på format MMYYYY, fikk: \"$dbData\"")
             return null

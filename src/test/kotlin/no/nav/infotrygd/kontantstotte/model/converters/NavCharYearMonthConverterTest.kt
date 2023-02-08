@@ -17,6 +17,7 @@ internal class NavCharYearMonthConverterTest {
     @Test
     fun convertToEntityAttribute() {
         assertThat(converter.convertToEntityAttribute("112020")).isEqualTo(YearMonth.of(2020, 11))
+        assertThat(converter.convertToEntityAttribute("12020")).isEqualTo(YearMonth.of(2020, 1))
         assertThat(converter.convertToEntityAttribute(null)).isNull()
 
         assertThat(converter.convertToEntityAttribute("000000")).isNull()
