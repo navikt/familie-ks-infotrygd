@@ -18,10 +18,10 @@ class TilgangskontrollService(
     val secureLogger: Logger = LoggerFactory.getLogger("secureLogger")
 
     fun sjekkTilgang() {
-        val roles = tokenValidationContextHolder.tokenValidationContext.anyValidClaims.map {
+        val roles = tokenValidationContextHolder.tokenValidationContext.getClaims("azuread").map {
             it.getAsList("roles")
         }.orElse(emptyList())
-        val groups = tokenValidationContextHolder.tokenValidationContext.anyValidClaims.map {
+        val groups = tokenValidationContextHolder.tokenValidationContext.getClaims("azuread").map {
             it.getAsList("groups")
         }.orElse(emptyList())
 
