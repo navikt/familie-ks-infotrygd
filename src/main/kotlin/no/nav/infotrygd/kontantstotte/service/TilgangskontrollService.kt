@@ -18,19 +18,16 @@ class TilgangskontrollService(
     val secureLogger: Logger = LoggerFactory.getLogger("secureLogger")
 
     fun sjekkTilgang() {
-        val roles = tokenValidationContextHolder.tokenValidationContext.getClaims("azuread")
-            .getAsList("roles")
-        val groups = tokenValidationContextHolder.tokenValidationContext.getClaims("azuread")
-            .getAsList("groups")
+        val roles = tokenValidationContextHolder.tokenValidationContext.anyValidClaims.map {
+            it.getAsList("roles")
+        }.orElse(emptyList())
+        val groups = tokenValidationContextHolder.tokenValidationContext.anyValidClaims.map {
+            it.getAsList("groups")
+        }.orElse(emptyList())
 
         secureLogger.info("Roller: $roles")
         secureLogger.info("Grupper: $groups")
-        if (!(
-            roles.contains(ACCESS_AS_APPLICATION_ROLE) || groups.contains(saksbehandlerGroupId) || groups.contains(
-                    forvalterGroupId
-                )
-            )
-        ) {
+        if (!(roles.contains(ACCESS_AS_APPLICATION_ROLE) || groups.contains(saksbehandlerGroupId) || groups.contains(forvalterGroupId))) {
             throw ResponseStatusException(HttpStatus.FORBIDDEN, "User har ikke tilgang til å kalle tjenesten!")
         }
     }
