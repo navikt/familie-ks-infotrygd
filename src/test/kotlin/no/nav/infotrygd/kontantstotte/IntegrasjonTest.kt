@@ -19,7 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.ActiveProfiles
-
+import java.time.YearMonth
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -60,6 +60,19 @@ internal class IntegrasjonTest {
         ))
 
         assertThat(res).isEqualTo(true)
+    }
+
+    @Test
+    fun harIkkeKontantstotteIInfotrygd() {
+        val sf = StonadFactory()
+        val stonad = sf.stonad(barnEksempler = listOf(sf.barn()), opphoertVfom = YearMonth.now().minusMonths(3))
+        stonadRepository.save(stonad)
+
+        val res = testClientFactory.get(port).harKontantstotteIInfotrygd(InnsynRequest(
+            barn = listOf(stonad.barn.first().fnr.reversert)
+        ))
+
+        assertThat(res).isEqualTo(false)
     }
 
     @Test

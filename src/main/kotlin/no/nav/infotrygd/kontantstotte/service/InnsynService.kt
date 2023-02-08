@@ -13,6 +13,7 @@ import no.nav.infotrygd.kontantstotte.repository.StonadRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import java.time.YearMonth
 
 @Service
 class InnsynService(
@@ -36,10 +37,10 @@ class InnsynService(
 
     fun harKontantstotte(req: InnsynRequest): Boolean {
         val barna = barnRepository.findByFnrIn(req.barn.tilFoedselsnummere())
-        val stonader = stonadRepository.findByBarnIn(barna)
+        val stonader = stonadRepository.findByBarnIn(barna).filter { it.tom == null || it.tom!! > YearMonth.now() }
+
         logger.info("Fant ${stonader.size} for barna")
         secureLogger.info("Fant ${stonader.size} for barna $barna")
-
         return stonader.isNotEmpty()
     }
 

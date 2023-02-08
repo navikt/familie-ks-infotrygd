@@ -15,7 +15,8 @@ class StonadFactory(
 ) {
     fun stonad(
         barnEksempler: List<Barn> = emptyList(),
-        utbetalingerEksempler: List<Utbetaling> = emptyList()
+        utbetalingerEksempler: List<Utbetaling> = emptyList(),
+        opphoertVfom: YearMonth? = null
     ): Stonad {
         val barn = barnEksempler.map { it.copy(
             region = region,
@@ -37,7 +38,7 @@ class StonadFactory(
             personkey = personkey,
             iverfomSeq = iverfomSeq,
             virkfomSeq = virkfomSeq,
-            opphoertVfom = null,
+            opphoertVfom = opphoertVfom,
             fnr = TestData.foedselsNr(),
             barn = barn,
             utbetalinger = utbetalinger
