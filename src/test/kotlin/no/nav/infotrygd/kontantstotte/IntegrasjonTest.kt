@@ -43,7 +43,7 @@ internal class IntegrasjonTest {
         stonadRepository.save(stonad)
 
         val res = testClientFactory.get(port).hentPerioder(InnsynRequest(
-            barn = listOf(stonad.fnr.reversert)
+            barn = listOf(stonad.fnr.asString)
         ))
 
         assertThat(res.data).hasSameSizeAs(listOf(stonad))

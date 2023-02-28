@@ -21,7 +21,7 @@ class InnsynService(
     private val barnRepository: BarnRepository
 ) {
     fun hentDataForSøker(req: InnsynRequest): InnsynResponse {
-        val stonader = stonadRepository.findByFnrIn(req.barn.tilFoedselsnummere())
+        val stonader = stonadRepository.findByFnrIn(req.barn.map { Foedselsnummer(it) })
         return InnsynResponse(
             data = stonader.map { it.toDto() }
         )
