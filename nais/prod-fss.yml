@@ -76,7 +76,7 @@ spec:
 
       tenant: "nav.no"
       replyURLs:
-        - "https://familie-ks-infotrygd.prod-fss-pub.nais.io/swagger-ui/oauth2-redirect.html"
+        - "https://familie-ks-infotrygd.intern.nav.no/swagger-ui/oauth2-redirect.html"
       singlePageApplication: true
   env:
     - name: "APP_DATASOURCE_URL"
