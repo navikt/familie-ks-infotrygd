@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpRequest
 import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatusCode
 import org.springframework.http.client.ClientHttpRequestExecution
 import org.springframework.http.client.ClientHttpRequestInterceptor
 import org.springframework.http.client.ClientHttpResponse
@@ -16,7 +17,7 @@ import org.springframework.web.client.ResponseErrorHandler
 import java.net.URI
 
 class TestClientException(
-    val status: HttpStatus,
+    val status: HttpStatusCode,
     val remoteUrl: URI,
     val remoteMethod: HttpMethod,
     message: String

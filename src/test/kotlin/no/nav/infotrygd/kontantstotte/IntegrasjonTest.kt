@@ -1,8 +1,6 @@
 package no.nav.infotrygd.kontantstotte
 
-import com.nimbusds.jose.JOSEObjectType
 import no.nav.infotrygd.kontantstotte.dto.InnsynRequest
-import no.nav.infotrygd.kontantstotte.model.ks.Barn
 import no.nav.infotrygd.kontantstotte.repository.StonadRepository
 import no.nav.infotrygd.kontantstotte.testutil.StonadFactory
 import no.nav.infotrygd.kontantstotte.testutil.TestData
@@ -10,13 +8,12 @@ import no.nav.infotrygd.kontantstotte.testutil.rest.TestClientException
 import no.nav.infotrygd.kontantstotte.testutil.rest.TestClientFactory
 import no.nav.infotrygd.kontantstotte.utils.reversert
 import no.nav.security.mock.oauth2.MockOAuth2Server
-import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.web.server.LocalServerPort
+import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.ActiveProfiles
 import java.time.YearMonth

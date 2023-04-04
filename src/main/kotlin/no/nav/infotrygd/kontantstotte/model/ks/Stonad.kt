@@ -10,7 +10,7 @@ import org.hibernate.annotations.Cascade
 import org.hibernate.annotations.CascadeType
 import java.math.BigDecimal
 import java.time.YearMonth
-import javax.persistence.*
+import jakarta.persistence.*
 
 @Entity
 @Table(name = "KS_STONAD_20")

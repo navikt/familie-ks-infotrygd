@@ -2,8 +2,8 @@ package no.nav.infotrygd.kontantstotte.model.converters
 
 import no.nav.commons.foedselsnummer.Foedselsnummer
 import java.math.BigDecimal
-import javax.persistence.AttributeConverter
-import javax.persistence.Converter
+import jakarta.persistence.AttributeConverter
+import jakarta.persistence.Converter
 
 @Converter
 class BigDecimalFoedselsnummerConverter : AttributeConverter<Foedselsnummer?, BigDecimal?> {
