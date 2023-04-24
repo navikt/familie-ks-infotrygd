@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
-import javax.persistence.EntityManager
+import jakarta.persistence.EntityManager
 
 @RunWith(SpringRunner::class)
 @DataJpaTest

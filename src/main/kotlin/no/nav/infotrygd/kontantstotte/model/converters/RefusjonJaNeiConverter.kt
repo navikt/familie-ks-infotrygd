@@ -1,6 +1,6 @@
 package no.nav.infotrygd.kontantstotte.model.converters
 
-import javax.persistence.AttributeConverter
+import jakarta.persistence.AttributeConverter
 
 class RefusjonJaNeiConverter : AttributeConverter<Boolean, String?> {
 

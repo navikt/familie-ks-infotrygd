@@ -2,8 +2,8 @@ package no.nav.infotrygd.kontantstotte.model.converters
 
 import org.slf4j.LoggerFactory
 import java.time.YearMonth
-import javax.persistence.AttributeConverter
-import javax.persistence.Converter
+import jakarta.persistence.AttributeConverter
+import jakarta.persistence.Converter
 
 @Converter
 class NavCharYearMonthConverter : AttributeConverter<YearMonth?, String?> {

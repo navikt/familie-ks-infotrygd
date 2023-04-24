@@ -3,7 +3,7 @@ package no.nav.infotrygd.kontantstotte.model.converters
 import no.nav.commons.foedselsnummer.Foedselsnummer
 import no.nav.infotrygd.kontantstotte.utils.fraReversert
 import no.nav.infotrygd.kontantstotte.utils.reversert
-import javax.persistence.AttributeConverter
+import jakarta.persistence.AttributeConverter
 
 class ReversedFoedselNrConverter : AttributeConverter<Foedselsnummer?, String?> {
     override fun convertToDatabaseColumn(attribute: Foedselsnummer?): String? {

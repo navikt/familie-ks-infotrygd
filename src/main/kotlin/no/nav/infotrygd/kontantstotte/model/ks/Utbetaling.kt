@@ -3,7 +3,7 @@ package no.nav.infotrygd.kontantstotte.model.ks
 import no.nav.infotrygd.kontantstotte.model.converters.NavCharYearMonthConverter
 import java.math.BigDecimal
 import java.time.YearMonth
-import javax.persistence.*
+import jakarta.persistence.*
 
 @Entity
 @Table(name = "KS_UTBETALING_30")
