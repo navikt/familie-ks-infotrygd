@@ -20,19 +20,19 @@ class InnsynController(
     private val tilgangskontrollService: TilgangskontrollService
 ) {
 
-    @PostMapping("/hentPerioderMedKontantstøtteIInfotrygd")
+    @PostMapping("/hentPerioderMedKontantstøtteIInfotrygd", "/hentPerioderMedKontantstotteIInfotrygd")
     fun hentPerioder(@RequestBody req: InnsynRequest): InnsynResponse {
         tilgangskontrollService.sjekkTilgang()
         return innsynService.hentDataForSøker(req)
     }
 
-    @PostMapping("/hentPerioderMedKontantstøtteIInfotrygdByBarn")
+    @PostMapping("/hentPerioderMedKontantstøtteIInfotrygdByBarn", "/hentPerioderMedKontantstotteIInfotrygdByBarn")
     fun hentPerioderForBarn(@RequestBody req: InnsynRequest): InnsynResponse {
         tilgangskontrollService.sjekkTilgang()
         return innsynService.hentDataForBarn(req)
     }
 
-    @PostMapping("/harLøpendeKontantstotteIInfotrygd")
+    @PostMapping("/harLøpendeKontantstotteIInfotrygd", "/harLopendeKontantstotteIInfotrygd")
     fun harKontantstotteIInfotrygd(@RequestBody req: InnsynRequest): Boolean {
         tilgangskontrollService.sjekkTilgang()
         return innsynService.harKontantstotte(req)
