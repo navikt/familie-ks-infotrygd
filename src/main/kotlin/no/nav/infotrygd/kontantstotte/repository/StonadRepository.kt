@@ -14,5 +14,5 @@ interface StonadRepository : JpaRepository<Stonad, BigDecimal> {
     fun findByFnrIn(fnr: List<Foedselsnummer>): List<Stonad>
 
     fun findByBarnIn(barn: List<Barn>): List<Stonad>
-    fun findByTomIsNullOrTomIsGreaterThan(dagensDato: YearMonth): List<Stonad>
+    fun findByOpphoertVfomIsNullOrOpphoertVfomIsGreaterThan(dagensDato: YearMonth): List<Stonad>
 }
