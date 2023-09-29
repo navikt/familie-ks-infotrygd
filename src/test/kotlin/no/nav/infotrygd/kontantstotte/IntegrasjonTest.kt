@@ -39,9 +39,11 @@ internal class IntegrasjonTest {
         val stonad = sf.stonad(barnEksempler = listOf(sf.barn()))
         stonadRepository.save(stonad)
 
-        val res = testClientFactory.get(port).hentPerioder(InnsynRequest(
-            barn = listOf(stonad.fnr.asString)
-        ))
+        val res = testClientFactory.get(port).hentPerioder(
+            InnsynRequest(
+                barn = listOf(stonad.fnr.asString),
+            ),
+        )
 
         assertThat(res.data).hasSameSizeAs(listOf(stonad))
     }
@@ -52,9 +54,11 @@ internal class IntegrasjonTest {
         val stonad = sf.stonad(barnEksempler = listOf(sf.barn()))
         stonadRepository.save(stonad)
 
-        val res = testClientFactory.get(port).harKontantstotteIInfotrygd(InnsynRequest(
-            barn = listOf(stonad.barn.first().fnr.reversert)
-        ))
+        val res = testClientFactory.get(port).harKontantstotteIInfotrygd(
+            InnsynRequest(
+                barn = listOf(stonad.barn.first().fnr.reversert),
+            ),
+        )
 
         assertThat(res).isEqualTo(true)
     }
@@ -65,11 +69,30 @@ internal class IntegrasjonTest {
         val stonad = sf.stonad(barnEksempler = listOf(sf.barn()), opphoertVfom = YearMonth.now().minusMonths(3))
         stonadRepository.save(stonad)
 
-        val res = testClientFactory.get(port).harKontantstotteIInfotrygd(InnsynRequest(
-            barn = listOf(stonad.barn.first().fnr.reversert)
-        ))
+        val res = testClientFactory.get(port).harKontantstotteIInfotrygd(
+            InnsynRequest(
+                barn = listOf(stonad.barn.first().fnr.reversert),
+            ),
+        )
 
         assertThat(res).isEqualTo(false)
+    }
+
+    @Test
+    fun hentAlleBarnMedLøpendeFagsakTest() {
+        val sf = StonadFactory()
+        val barn = sf.barn()
+        val utbetaling = sf.utbetaling()
+        val stonad = sf.stonad(
+            barnEksempler = listOf(barn),
+            utbetalingerEksempler = listOf(utbetaling),
+        )
+
+        stonadRepository.save(stonad)
+
+        val res = testClientFactory.get(port).hentAlleBarnMedLøpendeFagsak()
+
+        assertThat(res).isNotNull
     }
 
     @Test
@@ -78,5 +101,3 @@ internal class IntegrasjonTest {
         assertThat(e.status).isEqualTo(HttpStatus.UNAUTHORIZED)
     }
 }
-
-

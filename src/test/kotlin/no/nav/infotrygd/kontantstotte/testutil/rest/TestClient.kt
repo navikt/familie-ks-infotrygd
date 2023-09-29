@@ -18,4 +18,8 @@ class TestClient(private val restTemplate: RestTemplate) {
     fun harKontantstotteIInfotrygd(req: InnsynRequest): Boolean {
         return restTemplate.postForObject("/api/harLøpendeKontantstotteIInfotrygd", req)
     }
+
+    fun hentAlleBarnMedLøpendeFagsak(): List<String> {
+        return restTemplate.getForObject("/api/hentidentertilbarnmedlopendesaker")
+    }
 }

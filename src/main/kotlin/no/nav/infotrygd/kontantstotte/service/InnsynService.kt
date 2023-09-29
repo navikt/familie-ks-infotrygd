@@ -45,9 +45,13 @@ class InnsynService(
     }
 
     fun hentbarnmedløpendekontantstøtte(): List<String> {
-        val identer = stonadRepository.findByOpphoertVfomIsNullOrOpphoertVfomIsGreaterThan(YearMonth.now()).map { stonad -> stonad.barn.map { barn -> barn.fnr } }.flatten()
+        val stønader = stonadRepository.findByOpphoertVfomIsNullOrOpphoertVfomIsGreaterThan(YearMonth.now())
+        logger.info("Fant ${stønader.size} stønader")
+
+        val foedselsnumre = stønader.map { stonad -> stonad.barn.map { barn -> barn.fnr } }
+        logger.info("Fant ${foedselsnumre.size} foedselsnumre")
+        return foedselsnumre.flatten()
             .map { it.asString }
-        return identer
     }
 
     companion object {
