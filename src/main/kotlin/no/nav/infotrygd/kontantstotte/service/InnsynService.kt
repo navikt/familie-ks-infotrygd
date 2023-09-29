@@ -18,12 +18,12 @@ import java.time.YearMonth
 @Service
 class InnsynService(
     private val stonadRepository: StonadRepository,
-    private val barnRepository: BarnRepository
+    private val barnRepository: BarnRepository,
 ) {
     fun hentDataForSøker(req: InnsynRequest): InnsynResponse {
         val stonader = stonadRepository.findByFnrIn(req.barn.map { Foedselsnummer(it) })
         return InnsynResponse(
-            data = stonader.map { it.toDto() }
+            data = stonader.map { it.toDto() },
         )
     }
 
@@ -31,7 +31,7 @@ class InnsynService(
         val barna = barnRepository.findByFnrIn(req.barn.tilFoedselsnummere())
         val stonader = stonadRepository.findByBarnIn(barna)
         return InnsynResponse(
-            data = stonader.map { it.toDto() }
+            data = stonader.map { it.toDto() },
         )
     }
 
@@ -42,6 +42,12 @@ class InnsynService(
         logger.info("Fant ${stonader.size} for barna")
         secureLogger.info("Fant ${stonader.size} for barna $barna")
         return stonader.isNotEmpty()
+    }
+
+    fun hentbarnmedløpendekontantstøtte(): List<String> {
+        val identer = stonadRepository.findByOpphoertVfomIsNullOrOpphoertVfomIsGreaterThan(YearMonth.now()).map { stonad -> stonad.barn.map { barn -> barn.fnr } }.flatten()
+            .map { it.asString }
+        return identer
     }
 
     companion object {
@@ -56,6 +62,6 @@ private fun Stonad.toDto(): StonadDto {
         fom = this.fom,
         tom = this.tom,
         belop = this.belop,
-        barn = this.barn.map { BarnDto(fnr = Foedselsnummer.tilReversert(it.fnr.asString)) }
+        barn = this.barn.map { BarnDto(fnr = Foedselsnummer.tilReversert(it.fnr.asString)) },
     )
 }
