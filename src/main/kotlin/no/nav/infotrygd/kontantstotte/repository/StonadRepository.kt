@@ -6,7 +6,7 @@ import no.nav.infotrygd.kontantstotte.model.ks.Stonad
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.math.BigDecimal
-import java.time.YearMonth
+
 
 @Repository
 interface StonadRepository : JpaRepository<Stonad, BigDecimal> {
@@ -14,5 +14,5 @@ interface StonadRepository : JpaRepository<Stonad, BigDecimal> {
     fun findByFnrIn(fnr: List<Foedselsnummer>): List<Stonad>
 
     fun findByBarnIn(barn: List<Barn>): List<Stonad>
-    fun findByOpphoertVfomIsNullOrOpphoertVfomIsGreaterThan(dagensDato: YearMonth): List<Stonad>
+    fun findByOpphoertVfomEquals(opphoertFom: String): List<Stonad>
 }

@@ -16,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.ActiveProfiles
-import java.time.YearMonth
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -66,7 +65,7 @@ internal class IntegrasjonTest {
     @Test
     fun harIkkeKontantstotteIInfotrygd() {
         val sf = StonadFactory()
-        val stonad = sf.stonad(barnEksempler = listOf(sf.barn()), opphoertVfom = YearMonth.now().minusMonths(3))
+        val stonad = sf.stonad(barnEksempler = listOf(sf.barn()), opphoertVfom = "012021")
         stonadRepository.save(stonad)
 
         val res = testClientFactory.get(port).harKontantstotteIInfotrygd(
@@ -86,6 +85,7 @@ internal class IntegrasjonTest {
         val stonad = sf.stonad(
             barnEksempler = listOf(barn),
             utbetalingerEksempler = listOf(utbetaling),
+            opphoertVfom = "000000",
         )
 
         stonadRepository.save(stonad)
