@@ -52,6 +52,9 @@ fun parseMMYYYYOrNull(value: String?): YearMonth? {
     } catch (e: Exception) {
         return null
     }
-
-    return YearMonth.of(aarStr.toInt(), maanedStr.toInt())
+    return try {
+        YearMonth.of(aarStr.toInt(), maanedStr.toInt())
+    } catch (e: Exception) {
+        null
+    }
 }
