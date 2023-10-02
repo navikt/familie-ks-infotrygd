@@ -1,5 +1,6 @@
 package no.nav.infotrygd.kontantstotte.repository
 
+import jakarta.persistence.EntityManager
 import no.nav.infotrygd.kontantstotte.testutil.StonadFactory
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
@@ -8,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
-import jakarta.persistence.EntityManager
-import java.time.YearMonth
 
 @RunWith(SpringRunner::class)
 @DataJpaTest
@@ -29,7 +28,8 @@ class StonadRepositoryTest {
         val utbetaling = sf.utbetaling()
         val stonad = sf.stonad(
             barnEksempler = listOf(barn),
-            utbetalingerEksempler = listOf(utbetaling)
+            utbetalingerEksempler = listOf(utbetaling),
+            opphoertVfom = "000000",
         )
 
         stonadRepository.save(stonad)
@@ -57,7 +57,9 @@ class StonadRepositoryTest {
         val utbetaling = sf.utbetaling()
         val stonad = sf.stonad(
             barnEksempler = listOf(barn),
-            utbetalingerEksempler = listOf(utbetaling)
+            utbetalingerEksempler = listOf(utbetaling),
+            opphoertVfom = "000000",
+
         )
 
         stonadRepository.save(stonad)
@@ -65,7 +67,7 @@ class StonadRepositoryTest {
         entityManager.flush()
         entityManager.clear()
 
-        val res = stonadRepository.findByOpphoertVfomIsNullOrOpphoertVfomIsGreaterThan(YearMonth.now())
+        val res = stonadRepository.findByOpphoertVfomEquals("000000")
         assertThat(res).hasSameSizeAs(listOf(stonad))
 
         val resStonad = res[0]

@@ -6,6 +6,7 @@ spring:
     properties:
       hibernate:
         default_schema: INFOTRYGD_Q0
+        show_sql: true
   datasource:
     url: jdbc:h2:mem:testdb:MODE=Oracle
     username: sa
