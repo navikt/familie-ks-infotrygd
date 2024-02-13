@@ -51,7 +51,7 @@ class InnsynController(
         return innsynService.hentbarnmedløpendekontantstøtte()
     }
 
-    @GetMapping("/hent-sokere-og-barn-med-løpende-kontantstøtte")
+    @GetMapping("/hent-sokere-og-barn-med-loepende-kontantstøtte")
     fun hentSøkereOgBarnMedLøpendeKontantstøtteIInfotrygd(): List<SøkerOgBarn> {
         tilgangskontrollService.sjekkTilgang()
         return innsynService.hentSøkerOgBarnMedLøpendeKontantstøtte()
