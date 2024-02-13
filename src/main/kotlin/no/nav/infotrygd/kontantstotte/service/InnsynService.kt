@@ -58,12 +58,13 @@ class InnsynService(
         val stønader = stonadRepository.findByOpphoertVfomEquals("000000")
         logger.info("Fant ${stønader.size} stønader")
 
-        val foedselsnumre = stønader.map { stonad ->
-            SøkerOgBarn(
-                søkerIdent = stonad.fnr.asString,
-                barnIdenter = stonad.barn.map { it.fnr.asString }
-            )
-        }
+        val foedselsnumre =
+            stønader.map { stonad ->
+                SøkerOgBarn(
+                    søkerIdent = stonad.fnr.asString,
+                    barnIdenter = stonad.barn.map { it.fnr.asString },
+                )
+            }
         return foedselsnumre
     }
 
@@ -74,8 +75,8 @@ class InnsynService(
 }
 
 data class SøkerOgBarn(
-    søkerIdent: String
-    barnIdenter: List<String>,
+    val søkerIdent: String,
+    val barnIdenter: List<String>,
 )
 
 private fun Stonad.toDto(): StonadDto {
