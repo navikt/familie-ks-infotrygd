@@ -54,11 +54,29 @@ class InnsynService(
             .map { it.asString }
     }
 
+    fun hentSøkerOgBarnMedLøpendeKontantstøtte(): List<SøkerOgBarn> {
+        val stønader = stonadRepository.findByOpphoertVfomEquals("000000")
+        logger.info("Fant ${stønader.size} stønader")
+
+        val foedselsnumre = stønader.map { stonad ->
+            SøkerOgBarn(
+                søkerIdent = stonad.fnr.asString,
+                barnIdenter = stonad.barn.map { it.fnr.asString }
+            )
+        }
+        return foedselsnumre
+    }
+
     companion object {
         private val logger = LoggerFactory.getLogger(InnsynService::class.java)
         private val secureLogger: Logger = LoggerFactory.getLogger("secureLogger")
     }
 }
+
+data class SøkerOgBarn(
+    søkerIdent: String
+    barnIdenter: List<String>,
+)
 
 private fun Stonad.toDto(): StonadDto {
     return StonadDto(

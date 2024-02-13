@@ -4,6 +4,7 @@ import io.micrometer.core.annotation.Timed
 import no.nav.infotrygd.kontantstotte.dto.InnsynRequest
 import no.nav.infotrygd.kontantstotte.dto.InnsynResponse
 import no.nav.infotrygd.kontantstotte.service.InnsynService
+import no.nav.infotrygd.kontantstotte.service.SøkerOgBarn
 import no.nav.infotrygd.kontantstotte.service.TilgangskontrollService
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.web.bind.annotation.GetMapping
@@ -20,21 +21,26 @@ class InnsynController(
     private val innsynService: InnsynService,
     private val tilgangskontrollService: TilgangskontrollService,
 ) {
-
     @PostMapping("/hentPerioderMedKontantstøtteIInfotrygd", "/hentPerioderMedKontantstotteIInfotrygd")
-    fun hentPerioder(@RequestBody req: InnsynRequest): InnsynResponse {
+    fun hentPerioder(
+        @RequestBody req: InnsynRequest,
+    ): InnsynResponse {
         tilgangskontrollService.sjekkTilgang()
         return innsynService.hentDataForSøker(req)
     }
 
     @PostMapping("/hentPerioderMedKontantstøtteIInfotrygdByBarn", "/hentPerioderMedKontantstotteIInfotrygdByBarn")
-    fun hentPerioderForBarn(@RequestBody req: InnsynRequest): InnsynResponse {
+    fun hentPerioderForBarn(
+        @RequestBody req: InnsynRequest,
+    ): InnsynResponse {
         tilgangskontrollService.sjekkTilgang()
         return innsynService.hentDataForBarn(req)
     }
 
     @PostMapping("/harLøpendeKontantstotteIInfotrygd", "/harLopendeKontantstotteIInfotrygd")
-    fun harKontantstotteIInfotrygd(@RequestBody req: InnsynRequest): Boolean {
+    fun harKontantstotteIInfotrygd(
+        @RequestBody req: InnsynRequest,
+    ): Boolean {
         tilgangskontrollService.sjekkTilgang()
         return innsynService.harKontantstotte(req)
     }
@@ -43,5 +49,11 @@ class InnsynController(
     fun harKontantstotteIInfotrygd(): List<String> {
         tilgangskontrollService.sjekkTilgang()
         return innsynService.hentbarnmedløpendekontantstøtte()
+    }
+
+    @GetMapping("/hent-sokere-og-barn-med-løpende-kontantstøtte")
+    fun hentSøkereOgBarnMedLøpendeKontantstøtteIInfotrygd(): List<SøkerOgBarn> {
+        tilgangskontrollService.sjekkTilgang()
+        return innsynService.hentSøkerOgBarnMedLøpendeKontantstøtte()
     }
 }
