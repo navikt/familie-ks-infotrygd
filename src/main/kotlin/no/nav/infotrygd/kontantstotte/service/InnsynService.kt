@@ -54,7 +54,7 @@ class InnsynService(
             .map { it.asString }
     }
 
-    fun hentSøkerOgBarneMedLøpendeKontantstøtte(): List<SøkerOgBarn> {
+    fun hentSøkerOgBarnMedLøpendeKontantstøtte(): List<SøkerOgBarn> {
         val stønader = stonadRepository.findByOpphoertVfomEquals("000000")
         logger.info("Fant ${stønader.size} stønader")
 
