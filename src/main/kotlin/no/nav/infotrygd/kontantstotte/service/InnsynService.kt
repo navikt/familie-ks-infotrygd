@@ -10,6 +10,7 @@ import no.nav.infotrygd.kontantstotte.dto.tilReversert
 import no.nav.infotrygd.kontantstotte.model.ks.Stonad
 import no.nav.infotrygd.kontantstotte.repository.BarnRepository
 import no.nav.infotrygd.kontantstotte.repository.StonadRepository
+import no.nav.infotrygd.kontantstotte.utils.reversert
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -44,6 +45,7 @@ class InnsynService(
         return stonader.isNotEmpty()
     }
 
+    // Infotrygd gir reverserte identer på barna. Dersom man ønsker barn på riktig format må man bruke barn.fnr.reversert
     fun hentbarnmedløpendekontantstøtte(): List<String> {
         val stønader = stonadRepository.findByOpphoertVfomEquals("000000")
         logger.info("Fant ${stønader.size} stønader")
@@ -62,7 +64,7 @@ class InnsynService(
             stønader.map { stonad ->
                 SøkerOgBarn(
                     søkerIdent = stonad.fnr.asString,
-                    barnIdenter = stonad.barn.map { it.fnr.asString },
+                    barnIdenter = stonad.barn.map { it.fnr.reversert },
                 )
             }
         return foedselsnumre
