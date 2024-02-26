@@ -6,7 +6,6 @@ import no.nav.infotrygd.kontantstotte.testutil.StonadFactory
 import no.nav.infotrygd.kontantstotte.testutil.TestData
 import no.nav.infotrygd.kontantstotte.testutil.rest.TestClientException
 import no.nav.infotrygd.kontantstotte.testutil.rest.TestClientFactory
-import no.nav.infotrygd.kontantstotte.utils.reversert
 import no.nav.security.mock.oauth2.MockOAuth2Server
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -55,7 +54,7 @@ internal class IntegrasjonTest {
 
         val res = testClientFactory.get(port).harKontantstotteIInfotrygd(
             InnsynRequest(
-                barn = listOf(stonad.barn.first().fnr.reversert),
+                barn = listOf(stonad.barn.first().fnr.asString),
             ),
         )
 
@@ -70,7 +69,7 @@ internal class IntegrasjonTest {
 
         val res = testClientFactory.get(port).harKontantstotteIInfotrygd(
             InnsynRequest(
-                barn = listOf(stonad.barn.first().fnr.reversert),
+                barn = listOf(stonad.barn.first().fnr.asString),
             ),
         )
 
