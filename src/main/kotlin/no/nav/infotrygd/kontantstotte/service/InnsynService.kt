@@ -50,10 +50,9 @@ class InnsynService(
         val stønader = stonadRepository.findByOpphoertVfomEquals("000000")
         logger.info("Fant ${stønader.size} stønader")
 
-        val foedselsnumre = stønader.map { stonad -> stonad.barn.map { barn -> barn.fnr } }
+        val foedselsnumre = stønader.map { stonad -> stonad.barn.map { barn -> barn.fnr.reversert } }
         logger.info("Fant ${foedselsnumre.size} foedselsnumre")
         return foedselsnumre.flatten()
-            .map { it.asString }
     }
 
     fun hentSøkerOgBarnMedLøpendeKontantstøtte(): List<SøkerOgBarn> {
