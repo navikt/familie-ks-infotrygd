@@ -44,7 +44,6 @@ class InnsynService(
         return stonader.isNotEmpty()
     }
 
-    // Infotrygd gir reverserte identer på barna. Dersom man ønsker barn på riktig format må man bruke barn.fnr.reversert
     fun hentbarnmedløpendekontantstøtte(): List<String> {
         val stønader = stonadRepository.findByOpphoertVfomEquals("000000")
         logger.info("Fant ${stønader.size} stønader")
@@ -85,6 +84,6 @@ private fun Stonad.toDto(): StonadDto {
         fom = this.fom,
         tom = this.tom,
         belop = this.belop,
-        barn = this.barn.map { BarnDto(fnr = Foedselsnummer.tilReversert(it.fnr.asString)) },
+        barn = this.barn.map { BarnDto(fnr = it.fnr) },
     )
 }
