@@ -6,7 +6,6 @@ import no.nav.infotrygd.kontantstotte.dto.InnsynRequest
 import no.nav.infotrygd.kontantstotte.dto.InnsynResponse
 import no.nav.infotrygd.kontantstotte.dto.StonadDto
 import no.nav.infotrygd.kontantstotte.dto.tilFoedselsnummere
-import no.nav.infotrygd.kontantstotte.dto.tilReversert
 import no.nav.infotrygd.kontantstotte.model.ks.Stonad
 import no.nav.infotrygd.kontantstotte.repository.BarnRepository
 import no.nav.infotrygd.kontantstotte.repository.StonadRepository
