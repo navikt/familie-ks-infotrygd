@@ -6,11 +6,9 @@ import no.nav.infotrygd.kontantstotte.dto.InnsynRequest
 import no.nav.infotrygd.kontantstotte.dto.InnsynResponse
 import no.nav.infotrygd.kontantstotte.dto.StonadDto
 import no.nav.infotrygd.kontantstotte.dto.tilFoedselsnummere
-import no.nav.infotrygd.kontantstotte.dto.tilReversert
 import no.nav.infotrygd.kontantstotte.model.ks.Stonad
 import no.nav.infotrygd.kontantstotte.repository.BarnRepository
 import no.nav.infotrygd.kontantstotte.repository.StonadRepository
-import no.nav.infotrygd.kontantstotte.utils.reversert
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -45,15 +43,13 @@ class InnsynService(
         return stonader.isNotEmpty()
     }
 
-    // Infotrygd gir reverserte identer på barna. Dersom man ønsker barn på riktig format må man bruke barn.fnr.reversert
     fun hentbarnmedløpendekontantstøtte(): List<String> {
         val stønader = stonadRepository.findByOpphoertVfomEquals("000000")
         logger.info("Fant ${stønader.size} stønader")
 
         val foedselsnumre = stønader.map { stonad -> stonad.barn.map { barn -> barn.fnr } }
         logger.info("Fant ${foedselsnumre.size} foedselsnumre")
-        return foedselsnumre.flatten()
-            .map { it.asString }
+        return foedselsnumre.flatten().map { it.asString }
     }
 
     fun hentSøkerOgBarnMedLøpendeKontantstøtte(): List<SøkerOgBarn> {
@@ -64,7 +60,7 @@ class InnsynService(
             stønader.map { stonad ->
                 SøkerOgBarn(
                     søkerIdent = stonad.fnr.asString,
-                    barnIdenter = stonad.barn.map { it.fnr.reversert },
+                    barnIdenter = stonad.barn.map { it.fnr.asString },
                 )
             }
         return foedselsnumre
@@ -87,6 +83,6 @@ private fun Stonad.toDto(): StonadDto {
         fom = this.fom,
         tom = this.tom,
         belop = this.belop,
-        barn = this.barn.map { BarnDto(fnr = Foedselsnummer.tilReversert(it.fnr.asString)) },
+        barn = this.barn.map { BarnDto(fnr = it.fnr) },
     )
 }

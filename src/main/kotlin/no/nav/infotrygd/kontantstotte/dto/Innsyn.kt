@@ -24,18 +24,5 @@ data class BarnDto(
 )
 
 fun List<String>.tilFoedselsnummere(): List<Foedselsnummer> {
-    return this.map { Foedselsnummer.tilReversert(it) }
-}
-
-fun Foedselsnummer.Companion.tilReversert(reversert: String): Foedselsnummer {
-    return Foedselsnummer(reverse(reversert))
-}
-
-private val regex = """(\d\d)(\d\d)(\d\d)(\d{5})""".toRegex()
-
-private fun reverse(fnr: String): String {
-    require(regex.matches(fnr)) { "Ikke et gyldig (reversert?) fødselsnummer: $fnr" }
-
-    val (a, b, c, pnr) = regex.find(fnr)!!.destructured
-    return "$c$b$a$pnr"
+    return this.map { Foedselsnummer(it) }
 }

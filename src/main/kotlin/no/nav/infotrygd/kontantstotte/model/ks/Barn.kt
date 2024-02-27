@@ -1,13 +1,13 @@
 package no.nav.infotrygd.kontantstotte.model.ks
 
 import no.nav.commons.foedselsnummer.Foedselsnummer
-import no.nav.infotrygd.kontantstotte.model.converters.BigDecimalFoedselsnummerConverter
 import java.math.BigDecimal
 import jakarta.persistence.Column
 import jakarta.persistence.Convert
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import no.nav.infotrygd.kontantstotte.model.converters.ReversedLongFoedselNrConverter
 
 @Entity
 @Table(name = "KS_BARN_10")
@@ -29,6 +29,6 @@ data class Barn(
     val virkfomSeq: String,
 
     @Column(name = "K10_BARN_FNR")
-    @Convert(converter = BigDecimalFoedselsnummerConverter::class)
+    @Convert(converter = ReversedLongFoedselNrConverter::class)
     val fnr: Foedselsnummer
 )
