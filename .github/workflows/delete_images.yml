@@ -16,3 +16,8 @@ jobs:
           package-name: 'familie-ks-infotrygd'
           package-type: 'container'
           min-versions-to-keep: 20
+      - uses: actions/delete-package-versions@v5
+        with:
+          package-name: 'familie-ba-migrering'
+          package-type: 'container'
+          min-versions-to-keep: 20
