@@ -27,7 +27,7 @@
 		<wiremock.version>3.0.1</wiremock.version>
 		<mockwebserver.version>5.0.0-alpha.12</mockwebserver.version>
 		<okhttp.version>5.0.0-alpha.12</okhttp.version>
-		<jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
+		<jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
 	</properties>
 
 	<dependencyManagement>
