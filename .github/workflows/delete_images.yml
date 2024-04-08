@@ -15,4 +15,4 @@ jobs:
         with:
           package-name: 'familie-ks-infotrygd'
           package-type: 'container'
-          min-versions-to-keep: 20
+          min-versions-to-keep: 1
