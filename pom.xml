@@ -27,7 +27,6 @@
 		<wiremock.version>3.0.1</wiremock.version>
 		<mockwebserver.version>5.0.0-alpha.12</mockwebserver.version>
 		<okhttp.version>5.0.0-alpha.12</okhttp.version>
-		<jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
 	</properties>
 
 	<dependencyManagement>
@@ -237,9 +236,18 @@
 				</dependencies>
 			</plugin>
 			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>${jacoco-maven-plugin.version}</version>
+				<!-- For å få dependency graph i SLSA som pushes av docker-build-push parameter byosbom -->
+				<groupId>org.cyclonedx</groupId>
+				<artifactId>cyclonedx-maven-plugin</artifactId>
+				<version>2.7.11</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>makeAggregateBom</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
