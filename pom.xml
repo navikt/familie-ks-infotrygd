@@ -26,7 +26,7 @@
 		<db-util.version>1.0.7</db-util.version>
 		<wiremock.version>3.0.1</wiremock.version>
 		<mockwebserver.version>5.0.0-alpha.12</mockwebserver.version>
-		<okhttp.version>5.0.0-alpha.12</okhttp.version>
+		<okhttp.version>5.0.0-alpha.14</okhttp.version>
 	</properties>
 
 	<dependencyManagement>
