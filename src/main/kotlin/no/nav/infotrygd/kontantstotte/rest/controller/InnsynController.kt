@@ -37,14 +37,6 @@ class InnsynController(
         return innsynService.hentDataForBarn(req)
     }
 
-    @PostMapping("/harLøpendeKontantstotteIInfotrygd", "/harLopendeKontantstotteIInfotrygd")
-    fun harKontantstotteIInfotrygd(
-        @RequestBody req: InnsynRequest,
-    ): Boolean {
-        tilgangskontrollService.sjekkTilgang()
-        return innsynService.harKontantstotte(req)
-    }
-
     @GetMapping("/hentidentertilbarnmedlopendesaker")
     fun harKontantstotteIInfotrygd(): List<String> {
         tilgangskontrollService.sjekkTilgang()

@@ -15,10 +15,6 @@ class TestClient(private val restTemplate: RestTemplate) {
         return restTemplate.postForObject("/api/hentPerioderMedKontantstøtteIInfotrygd", req)
     }
 
-    fun harKontantstotteIInfotrygd(req: InnsynRequest): Boolean {
-        return restTemplate.postForObject("/api/harLøpendeKontantstotteIInfotrygd", req)
-    }
-
     fun hentAlleBarnMedLøpendeFagsak(): List<String> {
         return restTemplate.getForObject("/api/hentidentertilbarnmedlopendesaker")
     }
