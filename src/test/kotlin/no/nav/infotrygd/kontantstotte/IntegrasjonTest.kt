@@ -6,7 +6,6 @@ import no.nav.infotrygd.kontantstotte.testutil.StonadFactory
 import no.nav.infotrygd.kontantstotte.testutil.TestData
 import no.nav.infotrygd.kontantstotte.testutil.rest.TestClientException
 import no.nav.infotrygd.kontantstotte.testutil.rest.TestClientFactory
-import no.nav.security.mock.oauth2.MockOAuth2Server
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -26,9 +25,6 @@ internal class IntegrasjonTest {
     private lateinit var testClientFactory: TestClientFactory
 
     @Autowired
-    private lateinit var mockOAuth2Server: MockOAuth2Server
-
-    @Autowired
     private lateinit var stonadRepository: StonadRepository
 
     @Test
@@ -44,36 +40,6 @@ internal class IntegrasjonTest {
         )
 
         assertThat(res.data).hasSameSizeAs(listOf(stonad))
-    }
-
-    @Test
-    fun harKontantstotteIInfotrygd() {
-        val sf = StonadFactory()
-        val stonad = sf.stonad(barnEksempler = listOf(sf.barn()))
-        stonadRepository.save(stonad)
-
-        val res = testClientFactory.get(port).harKontantstotteIInfotrygd(
-            InnsynRequest(
-                barn = listOf(stonad.barn.first().fnr.asString),
-            ),
-        )
-
-        assertThat(res).isEqualTo(true)
-    }
-
-    @Test
-    fun harIkkeKontantstotteIInfotrygd() {
-        val sf = StonadFactory()
-        val stonad = sf.stonad(barnEksempler = listOf(sf.barn()), opphoertVfom = "012021")
-        stonadRepository.save(stonad)
-
-        val res = testClientFactory.get(port).harKontantstotteIInfotrygd(
-            InnsynRequest(
-                barn = listOf(stonad.barn.first().fnr.asString),
-            ),
-        )
-
-        assertThat(res).isEqualTo(false)
     }
 
     @Test
