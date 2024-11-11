@@ -18,7 +18,7 @@
 		<java.version>21</java.version>
 		<kotlin.version>2.0.21</kotlin.version>
 		<testcontainers.version>1.20.3</testcontainers.version>
-		<token-validation.version>5.0.8</token-validation.version>
+		<token-validation.version>5.0.10</token-validation.version>
 		<springdoc-openapi.version>2.6.0</springdoc-openapi.version>
 		<httpclient.version>4.5.14</httpclient.version>
 		<logstash-logback-encoder.version>8.0</logstash-logback-encoder.version>
