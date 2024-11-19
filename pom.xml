@@ -206,12 +206,7 @@
 					<compilerPlugins>
 						<plugin>spring</plugin>
 						<plugin>jpa</plugin>
-						<plugin>all-open</plugin>
 					</compilerPlugins>
-					<pluginOptions>
-						<!-- todo: sett denne til riktig -->
-						<option>all-open:annotation=no.nav.historisk.innsyn.utils.AllOpen</option>
-					</pluginOptions>
 				</configuration>
 				<dependencies>
 					<dependency>
