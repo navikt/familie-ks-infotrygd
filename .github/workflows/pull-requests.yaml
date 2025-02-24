@@ -37,5 +37,5 @@ jobs:
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-fss
-          RESOURCE: nais/dev-fss.yml
+          RESOURCE: nais/dev-fss.yaml
           VAR: image=${{ steps.docker-push.outputs.image }}
