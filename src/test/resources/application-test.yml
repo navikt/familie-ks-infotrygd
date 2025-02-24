@@ -8,8 +8,6 @@ spring:
         show_sql: true
   datasource:
     url: jdbc:h2:mem:testdb:MODE=Oracle
-    username: sa
-    password:
     driver-class-name: org.h2.Driver
   sql:
     init:
@@ -27,3 +25,8 @@ no.nav.security.jwt:
 NAIS_APP_NAME: familie-ks-infotrygd
 AZURE_APP_CLIENT_ID: testid
 AZURE_APP_CLIENT_SECRET: testsecret
+
+
+vault:
+  password: "src/test/resources/vault/password"
+  username: "src/test/resources/vault/username"
