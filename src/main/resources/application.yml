@@ -1,12 +1,12 @@
 server.port: 8080
 
 spring:
+  main:
+    banner-mode: "off"
   application:
     name: ${NAIS_APP_NAME:familie-ks-infotrygd}
   datasource:
     url: ${APP_DATASOURCE_URL}
-    username: ${APP_DATASOURCE_USERNAME}
-    password: ${APP_DATASOURCE_PASSWORD}
     driver-class-name: ${APP_DATASOURCE_DRIVER}
   jpa:
     database-platform: ${APP_JPA_PLATFORM}
@@ -48,6 +48,10 @@ springdoc:
       client-id: ${AZURE_APP_CLIENT_ID}
       scope-separator: ","
     disable-swagger-default-url: true
+
+vault:
+  password: "/var/run/secrets/oracle/creds/password"
+  username: "/var/run/secrets/oracle/creds/username"
 
 # Swagger
 AUTHORIZATION_URL: https://login.microsoftonline.com/navq.onmicrosoft.com/oauth2/v2.0/authorize
