@@ -1,7 +1,5 @@
 FROM gcr.io/distroless/java21-debian12:nonroot
 
-
-COPY target/familie-ks-infotrygd-0.0.1-SNAPSHOT.jar app.jar
 COPY --chown=nonroot:nonroot ./target/familie-ks-infotrygd-0.0.1-SNAPSHOT.jar /app/app.jar
 
 WORKDIR /app
