@@ -3,13 +3,9 @@ name: Pull request
 on:
   pull_request:
 
-permissions:
-  contents: "read"
-  id-token: "write"
-
 jobs:
-  deploy-to-dev:
-    name: Bygg app/image, push til github, deploy til dev-fss
+  pull-request:
+    name: Pull request
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
