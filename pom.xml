@@ -24,7 +24,7 @@
 		<logstash-logback-encoder.version>8.1</logstash-logback-encoder.version>
 		<logback-syslog4j.version>1.0.0</logback-syslog4j.version>
 		<db-util.version>1.0.7</db-util.version>
-		<wiremock.version>3.12.1</wiremock.version>
+		<wiremock.version>3.13.0</wiremock.version>
 		<okhttp.version>5.0.0-alpha.14</okhttp.version>
 	</properties>
 
