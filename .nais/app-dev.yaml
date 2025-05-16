@@ -36,6 +36,11 @@ spec:
     requests: # App is guaranteed the requested resources and  will be scheduled on nodes with at least this amount of resources available
       cpu: 500m
       memory: 1024Mi
+  observability:
+    logging:
+      destinations:
+        - id: elastic
+        - id: loki
   ingresses:
   - https://familie-ks-infotrygd.dev-fss-pub.nais.io
   - https://familie-ks-infotrygd.dev.intern.nav.no/
