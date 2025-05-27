@@ -66,6 +66,10 @@ spec:
         - application: "familie-baks-mottak"
           namespace: teamfamilie
           cluster: dev-gcp
+    outbound:
+      rules:
+        - application: logging
+          namespace: nais-system
   azure:
     application:
       enabled: true
