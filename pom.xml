@@ -25,7 +25,7 @@
 		<logback-syslog4j.version>1.0.0</logback-syslog4j.version>
 		<db-util.version>1.0.7</db-util.version>
 		<wiremock.version>3.13.0</wiremock.version>
-		<okhttp.version>5.0.0-alpha.14</okhttp.version>
+		<okhttp.version>5.0.0-alpha.16</okhttp.version>
 	</properties>
 
 	<dependencyManagement>
