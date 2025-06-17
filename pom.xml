@@ -26,6 +26,7 @@
 		<db-util.version>1.0.7</db-util.version>
 		<wiremock.version>3.13.0</wiremock.version>
 		<okhttp.version>5.0.0-alpha.16</okhttp.version>
+		<otel.version>1.51.0</otel.version>
 	</properties>
 
 	<dependencyManagement>
@@ -76,6 +77,25 @@
 		<dependency>
 			<groupId>org.jetbrains.kotlin</groupId>
 			<artifactId>kotlin-stdlib</artifactId>
+		</dependency>
+
+		<!-- OpenTelemetry API -->
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-api</artifactId>
+			<version>${otel.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-sdk</artifactId>
+			<version>${otel.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-context</artifactId>
+			<version>${otel.version}</version>
 		</dependency>
 
 		<!-- Swagger -->

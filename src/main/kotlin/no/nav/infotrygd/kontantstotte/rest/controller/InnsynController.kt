@@ -1,6 +1,7 @@
 package no.nav.infotrygd.kontantstotte.rest.controller
 
 import io.micrometer.core.annotation.Timed
+import io.opentelemetry.api.trace.Span
 import no.nav.infotrygd.kontantstotte.dto.InnsynRequest
 import no.nav.infotrygd.kontantstotte.dto.InnsynResponse
 import no.nav.infotrygd.kontantstotte.service.InnsynService
@@ -52,8 +53,18 @@ class InnsynController(
     }
 
     @GetMapping("/uuid/{uuid}")
-    fun handleUuid(@PathVariable uuid: UUID): String {
-        tilgangskontrollService.sjekkTilgang()
-        return "OK"
+    fun handleUuid(
+        @PathVariable uuid: UUID,
+    ): String = getCurrentTraceId()
+
+    fun getCurrentTraceId(): String {
+        val currentSpan: Span = Span.current()
+        val spanContext = currentSpan.spanContext
+
+        return if (spanContext.isValid) {
+            spanContext.traceId
+        } else {
+            "No valid trace ID, guess you're debugging in the void"
+        }
     }
 }
