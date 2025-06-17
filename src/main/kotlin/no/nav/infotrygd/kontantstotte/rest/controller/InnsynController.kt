@@ -8,10 +8,12 @@ import no.nav.infotrygd.kontantstotte.service.SøkerOgBarn
 import no.nav.infotrygd.kontantstotte.service.TilgangskontrollService
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.UUID
 
 @ProtectedWithClaims(issuer = "azuread")
 @RestController
@@ -47,5 +49,11 @@ class InnsynController(
     fun hentSøkereOgBarnMedLøpendeKontantstøtteIInfotrygd(): List<SøkerOgBarn> {
         tilgangskontrollService.sjekkTilgang()
         return innsynService.hentSøkerOgBarnMedLøpendeKontantstøtte()
+    }
+
+    @GetMapping("/uuid/{uuid}")
+    fun handleUuid(@PathVariable uuid: UUID): String {
+        tilgangskontrollService.sjekkTilgang()
+        return "OK"
     }
 }
