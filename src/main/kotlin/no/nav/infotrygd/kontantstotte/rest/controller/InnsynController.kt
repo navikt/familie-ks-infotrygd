@@ -79,6 +79,7 @@ class InnsynController(
     fun <T> kjørIEgenTrace(body: () -> T): T {
         val tracer = GlobalOpenTelemetry.getTracer("task")
         val newRootSpan = tracer.spanBuilder("egentrace").setNoParent().startSpan()
+        newRootSpan.makeCurrent()
         val newTraceId = newRootSpan.spanContext.traceId
         logger.info("TraceId: $newTraceId")
 
