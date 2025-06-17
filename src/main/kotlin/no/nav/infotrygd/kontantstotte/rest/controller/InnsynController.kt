@@ -65,7 +65,7 @@ class InnsynController(
         val currentSpan: Span = Span.current()
         val spanContext = currentSpan.spanContext
 
-        kjørIEgenTrace {
+        kjørIEgenTrace(InnsynService::hentSøkerOgBarnMedLøpendeKontantstøtte.name) {
             innsynService.hentSøkerOgBarnMedLøpendeKontantstøtte()
         }
 
@@ -76,11 +76,13 @@ class InnsynController(
         }
     }
 
-    fun <T> kjørIEgenTrace(body: () -> T): T {
+    fun <T> kjørIEgenTrace(
+        navn: String,
+        body: () -> T,
+    ): T {
         val tracer = GlobalOpenTelemetry.getTracer("task")
 
-        val functionName = body::class.java.enclosingMethod?.name ?: "Unknown function"
-        val newRootSpan = tracer.spanBuilder(functionName).setNoParent().startSpan()
+        val newRootSpan = tracer.spanBuilder(navn).setNoParent().startSpan()
         newRootSpan.makeCurrent()
         val newTraceId = newRootSpan.spanContext.traceId
         logger.info("TraceId: $newTraceId")
