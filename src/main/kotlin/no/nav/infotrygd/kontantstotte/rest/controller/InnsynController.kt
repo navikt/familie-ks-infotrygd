@@ -64,10 +64,21 @@ class InnsynController(
     fun getCurrentTraceId(): String {
         val currentSpan: Span = Span.current()
         val spanContext = currentSpan.spanContext
+        logger.info("TraceId: ${spanContext.traceId}")
 
         kjørIEgenTrace(InnsynService::hentSøkerOgBarnMedLøpendeKontantstøtte.name) {
             innsynService.hentSøkerOgBarnMedLøpendeKontantstøtte()
         }
+
+//        val traceId = TraceId.fromLongs(uuid, uuid) // 128-bit trace ID
+//        val spanId = SpanId.fromLong(0x12345678L) // 64-bit span ID
+//        val spanContext2 =
+//            SpanContext.create(
+//                traceId,
+//                spanId,
+//                TraceFlags.getSampled(),
+//                TraceState.getDefault(),
+//            )
 
         return if (spanContext.isValid) {
             spanContext.traceId
@@ -83,7 +94,7 @@ class InnsynController(
         val tracer = GlobalOpenTelemetry.getTracer("task")
 
         val newRootSpan = tracer.spanBuilder(navn).setNoParent().startSpan()
-        newRootSpan.makeCurrent()
+        val scope = newRootSpan.makeCurrent()
         val newTraceId = newRootSpan.spanContext.traceId
         logger.info("TraceId: $newTraceId")
 
@@ -91,6 +102,7 @@ class InnsynController(
             body()
         } finally {
             newRootSpan.end()
+            scope.close()
         }
     }
 }
