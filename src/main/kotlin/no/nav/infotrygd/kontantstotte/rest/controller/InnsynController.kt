@@ -3,6 +3,12 @@ package no.nav.infotrygd.kontantstotte.rest.controller
 import io.micrometer.core.annotation.Timed
 import io.opentelemetry.api.GlobalOpenTelemetry
 import io.opentelemetry.api.trace.Span
+import io.opentelemetry.api.trace.SpanContext
+import io.opentelemetry.api.trace.SpanId
+import io.opentelemetry.api.trace.TraceFlags
+import io.opentelemetry.api.trace.TraceId
+import io.opentelemetry.api.trace.TraceState
+import io.opentelemetry.context.Context
 import no.nav.infotrygd.kontantstotte.dto.InnsynRequest
 import no.nav.infotrygd.kontantstotte.dto.InnsynResponse
 import no.nav.infotrygd.kontantstotte.service.InnsynService
@@ -66,19 +72,12 @@ class InnsynController(
         val spanContext = currentSpan.spanContext
         logger.info("TraceId: ${spanContext.traceId}")
 
-        kjørIEgenTrace(InnsynService::hentSøkerOgBarnMedLøpendeKontantstøtte.name) {
+        val nyTraceId = TraceId.fromLongs(123456L, 234567L)
+        val nySpanId = SpanId.fromLong(987L)
+
+        kjørIEgenTrace(nyTraceId, nySpanId, InnsynService::hentSøkerOgBarnMedLøpendeKontantstøtte.name) {
             innsynService.hentSøkerOgBarnMedLøpendeKontantstøtte()
         }
-
-//        val traceId = TraceId.fromLongs(uuid, uuid) // 128-bit trace ID
-//        val spanId = SpanId.fromLong(0x12345678L) // 64-bit span ID
-//        val spanContext2 =
-//            SpanContext.create(
-//                traceId,
-//                spanId,
-//                TraceFlags.getSampled(),
-//                TraceState.getDefault(),
-//            )
 
         return if (spanContext.isValid) {
             spanContext.traceId
@@ -88,12 +87,25 @@ class InnsynController(
     }
 
     fun <T> kjørIEgenTrace(
+        traceId: String?,
+        spanId: String?,
         navn: String,
         body: () -> T,
     ): T {
         val tracer = GlobalOpenTelemetry.getTracer("task")
 
-        val newRootSpan = tracer.spanBuilder(navn).setNoParent().startSpan()
+        val newContext = SpanContext.create(
+            traceId.toString(),
+            spanId.toString(),
+            TraceFlags.getSampled(),
+            TraceState.getDefault(),
+            )
+
+        val parentContext = Context.root().with(Span.wrap(newContext))
+
+        val newRootSpan = tracer.spanBuilder(navn)
+            .setParent(parentContext)
+            .startSpan()
         val scope = newRootSpan.makeCurrent()
         val newTraceId = newRootSpan.spanContext.traceId
         logger.info("TraceId: $newTraceId")
