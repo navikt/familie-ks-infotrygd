@@ -41,6 +41,9 @@ spec:
       destinations:
         - id: elastic
         - id: loki
+    autoInstrumentation:
+      enabled: true
+      runtime: java
   ingresses:
   - "https://familie-ks-infotrygd.prod-fss-pub.nais.io"
   - "https://familie-ks-infotrygd.intern.nav.no"
