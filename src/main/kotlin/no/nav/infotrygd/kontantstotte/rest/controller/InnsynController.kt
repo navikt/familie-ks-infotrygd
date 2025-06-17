@@ -1,6 +1,7 @@
 package no.nav.infotrygd.kontantstotte.rest.controller
 
 import io.micrometer.core.annotation.Timed
+import io.opentelemetry.api.GlobalOpenTelemetry
 import io.opentelemetry.api.trace.Span
 import no.nav.infotrygd.kontantstotte.dto.InnsynRequest
 import no.nav.infotrygd.kontantstotte.dto.InnsynResponse
@@ -8,6 +9,7 @@ import no.nav.infotrygd.kontantstotte.service.InnsynService
 import no.nav.infotrygd.kontantstotte.service.SøkerOgBarn
 import no.nav.infotrygd.kontantstotte.service.TilgangskontrollService
 import no.nav.security.token.support.core.api.ProtectedWithClaims
+import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -24,6 +26,8 @@ class InnsynController(
     private val innsynService: InnsynService,
     private val tilgangskontrollService: TilgangskontrollService,
 ) {
+    private val logger = LoggerFactory.getLogger(javaClass)
+
     @PostMapping("/hentPerioderMedKontantstøtteIInfotrygd", "/hentPerioderMedKontantstotteIInfotrygd")
     fun hentPerioder(
         @RequestBody req: InnsynRequest,
@@ -61,10 +65,27 @@ class InnsynController(
         val currentSpan: Span = Span.current()
         val spanContext = currentSpan.spanContext
 
+        kjørIEgenTrace {
+            innsynService.hentSøkerOgBarnMedLøpendeKontantstøtte()
+        }
+
         return if (spanContext.isValid) {
             spanContext.traceId
         } else {
             "No valid trace ID, guess you're debugging in the void"
+        }
+    }
+
+    fun <T> kjørIEgenTrace(body: () -> T): T {
+        val tracer = GlobalOpenTelemetry.getTracer("task")
+        val newRootSpan = tracer.spanBuilder("egentrace").setNoParent().startSpan()
+        val newTraceId = newRootSpan.spanContext.traceId
+        logger.info("TraceId: $newTraceId")
+
+        return try {
+            body()
+        } finally {
+            newRootSpan.end()
         }
     }
 }
