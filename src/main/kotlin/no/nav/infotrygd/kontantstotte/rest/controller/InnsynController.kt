@@ -4,7 +4,6 @@ import io.micrometer.core.annotation.Timed
 import io.opentelemetry.api.GlobalOpenTelemetry
 import io.opentelemetry.api.trace.Span
 import io.opentelemetry.api.trace.SpanContext
-import io.opentelemetry.api.trace.SpanId
 import io.opentelemetry.api.trace.TraceFlags
 import io.opentelemetry.api.trace.TraceId
 import io.opentelemetry.api.trace.TraceState
@@ -73,7 +72,7 @@ class InnsynController(
         logger.info("TraceId: ${spanContext.traceId}")
 
         val nyTraceId = TraceId.fromBytes("7d01ddae-dab3-4366-9b0b-70490b525e92".toByteArray())
-        val nySpanId = SpanId.fromBytes("handleUuid".toByteArray())
+        val nySpanId = null
 
         kjørIEgenTrace(nyTraceId, nySpanId, InnsynService::hentSøkerOgBarnMedLøpendeKontantstøtte.name) {
             innsynService.hentSøkerOgBarnMedLøpendeKontantstøtte()
