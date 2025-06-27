@@ -72,8 +72,8 @@ class InnsynController(
         val spanContext = currentSpan.spanContext
         logger.info("TraceId: ${spanContext.traceId}")
 
-        val nyTraceId = TraceId.fromLongs(123456L, 234567L)
-        val nySpanId = SpanId.fromLong(987L)
+        val nyTraceId = TraceId.fromBytes("7d01ddae-dab3-4366-9b0b-70490b525e92".toByteArray())
+        val nySpanId = SpanId.fromBytes("handleUuid".toByteArray())
 
         kjørIEgenTrace(nyTraceId, nySpanId, InnsynService::hentSøkerOgBarnMedLøpendeKontantstøtte.name) {
             innsynService.hentSøkerOgBarnMedLøpendeKontantstøtte()
@@ -94,18 +94,21 @@ class InnsynController(
     ): T {
         val tracer = GlobalOpenTelemetry.getTracer("task")
 
-        val newContext = SpanContext.create(
-            traceId.toString(),
-            spanId.toString(),
-            TraceFlags.getSampled(),
-            TraceState.getDefault(),
+        val newContext =
+            SpanContext.create(
+                traceId.toString(),
+                spanId.toString(),
+                TraceFlags.getSampled(),
+                TraceState.getDefault(),
             )
 
         val parentContext = Context.root().with(Span.wrap(newContext))
 
-        val newRootSpan = tracer.spanBuilder(navn)
-            .setParent(parentContext)
-            .startSpan()
+        val newRootSpan =
+            tracer
+                .spanBuilder(navn)
+                .setParent(parentContext)
+                .startSpan()
         val scope = newRootSpan.makeCurrent()
         val newTraceId = newRootSpan.spanContext.traceId
         logger.info("TraceId: $newTraceId")
