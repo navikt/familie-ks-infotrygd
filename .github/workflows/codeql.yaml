@@ -49,17 +49,17 @@ jobs:
             # your codebase is analyzed, see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # ratchet:actions/checkout@v4
 
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@39edc492dbe16b1465b0cafca41432d857bdb31a # ratchet:github/codeql-action/init@v3
+        uses: github/codeql-action/init@96f518a34f7a870018057716cc4d7a5c014bd61c # ratchet:github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
 
       - name: Sett opp java
-        uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # ratchet:actions/setup-java@v4
+        uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165 # ratchet:actions/setup-java@v4
         with:
           java-version: 21
           distribution: 'temurin'
@@ -71,6 +71,6 @@ jobs:
         run: mvn -B --no-transfer-progress compile
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@39edc492dbe16b1465b0cafca41432d857bdb31a # ratchet:github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@96f518a34f7a870018057716cc4d7a5c014bd61c # ratchet:github/codeql-action/analyze@v3
         with:
           category: "/language:${{matrix.language}}"
