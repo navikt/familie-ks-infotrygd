@@ -2,7 +2,7 @@
 AUTHORIZATION_URL: https://login.microsoftonline.com/navno.onmicrosoft.com/oauth2/v2.0/authorize
 TOKEN_URL: https://login.microsoftonline.com/navno.onmicrosoft.com/oauth2/v2.0/token
 
-TEAMFAMILIE_FORVALTNING_GROUP_ID: "3d718ae5-f25e-47a4-b4b3-084a97604c1d"
+TEAMFAMILIE_FORVALTNING_GROUP_ID: "024bfb25-ead3-4c04-bbe1-1db3d3362188"
 
 TEAMFAMILIE_SAKSBEHANDLER_GROUP_ID: "e40090eb-c2fb-400e-b412-e9084019a73b"  # SAKSBEHANDLER_ROLLE
 TEAMFAMILIE_BESLUTTER_GROUP_ID: "4e7f23d9-5db1-45c0-acec-89c86a9ec678"  # BESLUTTER_ROLLE
