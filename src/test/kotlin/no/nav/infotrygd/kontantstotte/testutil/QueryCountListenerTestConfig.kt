@@ -7,7 +7,7 @@ import org.assertj.core.api.Assertions
 import org.springframework.beans.factory.config.BeanPostProcessor
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
-import javax.sql.DataSource
+import jakarta.sql.DataSource
 
 @TestConfiguration
 class QueryCountListenerTestConfig {
