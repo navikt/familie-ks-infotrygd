@@ -3,6 +3,7 @@ package no.nav.infotrygd.kontantstotte
 import no.nav.infotrygd.kontantstotte.dto.InnsynRequest
 import no.nav.infotrygd.kontantstotte.repository.StonadRepository
 import no.nav.infotrygd.kontantstotte.testutil.StonadFactory
+import no.nav.infotrygd.kontantstotte.testutil.TestContainersConfiguration
 import no.nav.infotrygd.kontantstotte.testutil.TestData
 import no.nav.infotrygd.kontantstotte.testutil.rest.TestClientException
 import no.nav.infotrygd.kontantstotte.testutil.rest.TestClientFactory
@@ -12,11 +13,13 @@ import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.server.LocalServerPort
+import org.springframework.context.annotation.Import
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.ActiveProfiles
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
+@Import(TestContainersConfiguration::class)
 internal class IntegrasjonTest {
     @LocalServerPort
     var port: kotlin.Int = 0
