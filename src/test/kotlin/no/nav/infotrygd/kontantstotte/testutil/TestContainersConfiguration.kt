@@ -13,7 +13,7 @@ class TestContainersConfiguration {
 
     companion object {
         private val oracleContainer: OracleContainer = OracleContainer(
-            DockerImageName.parse("gvenzl/oracle-free:latest")
+            DockerImageName.parse("gvenzl/oracle-free:23-slim")
         ).apply {
             withReuse(true)
             start()
