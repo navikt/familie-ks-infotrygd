@@ -2,7 +2,6 @@ package no.nav.infotrygd.kontantstotte.repository
 
 import jakarta.persistence.EntityManager
 import no.nav.infotrygd.kontantstotte.testutil.StonadFactory
-import no.nav.infotrygd.kontantstotte.testutil.TestContainersConfiguration
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -16,10 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner
 @RunWith(SpringRunner::class)
 @DataJpaTest
 @ActiveProfiles("test")
-@Import(TestContainersConfiguration::class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class StonadRepositoryTest {
-
     @Autowired
     private lateinit var stonadRepository: StonadRepository
 
@@ -31,11 +27,12 @@ class StonadRepositoryTest {
         val sf = StonadFactory()
         val barn = sf.barn()
         val utbetaling = sf.utbetaling()
-        val stonad = sf.stonad(
-            barnEksempler = listOf(barn),
-            utbetalingerEksempler = listOf(utbetaling),
-            opphoertVfom = "000000",
-        )
+        val stonad =
+            sf.stonad(
+                barnEksempler = listOf(barn),
+                utbetalingerEksempler = listOf(utbetaling),
+                opphoertVfom = "000000",
+            )
 
         stonadRepository.save(stonad)
 
@@ -60,12 +57,12 @@ class StonadRepositoryTest {
         val sf = StonadFactory()
         val barn = sf.barn()
         val utbetaling = sf.utbetaling()
-        val stonad = sf.stonad(
-            barnEksempler = listOf(barn),
-            utbetalingerEksempler = listOf(utbetaling),
-            opphoertVfom = "000000",
-
-        )
+        val stonad =
+            sf.stonad(
+                barnEksempler = listOf(barn),
+                utbetalingerEksempler = listOf(utbetaling),
+                opphoertVfom = "000000",
+            )
 
         stonadRepository.save(stonad)
 
