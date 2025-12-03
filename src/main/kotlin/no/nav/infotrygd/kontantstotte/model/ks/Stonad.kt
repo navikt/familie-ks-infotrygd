@@ -7,8 +7,6 @@ import no.nav.infotrygd.kontantstotte.utils.DatoFormat
 import no.nav.infotrygd.kontantstotte.utils.fromSeqToYearMonthOrNull
 import no.nav.infotrygd.kontantstotte.utils.parseMMYYYYOrNull
 import org.hibernate.annotations.BatchSize
-import org.hibernate.annotations.Cascade
-import org.hibernate.annotations.CascadeType
 import java.math.BigDecimal
 import java.time.YearMonth
 
@@ -18,27 +16,20 @@ class Stonad(
     @Id
     @Column(name = "ID_STND", nullable = false)
     val id: BigDecimal,
-
     @Column(name = "REGION", columnDefinition = "CHAR")
     val region: String,
-
     @Column(name = "K01_PERSONKEY")
     val personkey: BigDecimal,
-
     @Column(name = "K20_IVERFOM_SEQ")
     val iverfomSeq: String,
-
     @Column(name = "K20_VIRKFOM_SEQ")
     val virkfomSeq: String,
-
     @Column(name = "K20_OPPHOERT_VFOM", columnDefinition = "VARCHAR2")
     val opphoertVfom: String?,
-
     @Column(name = "F_NR", columnDefinition = "CHAR")
     @Convert(converter = ReversedFoedselNrConverter::class)
     val fnr: Foedselsnummer,
-
-    @OneToMany
+    @OneToMany(cascade = [CascadeType.ALL])
     @JoinColumns(
         value = [
             JoinColumn(name = "REGION", referencedColumnName = "REGION"),
@@ -47,11 +38,9 @@ class Stonad(
             JoinColumn(name = "K10_BA_VFOM_SEQ", referencedColumnName = "K20_VIRKFOM_SEQ"),
         ],
     )
-    @Cascade(value = [CascadeType.ALL])
     @BatchSize(size = 100)
     val barn: List<Barn>,
-
-    @OneToMany
+    @OneToMany(cascade = [CascadeType.ALL])
     @JoinColumns(
         value = [
             JoinColumn(name = "REGION", referencedColumnName = "REGION"),
@@ -60,7 +49,6 @@ class Stonad(
             JoinColumn(name = "K30_VFOM_SEQ", referencedColumnName = "K20_VIRKFOM_SEQ"),
         ],
     )
-    @Cascade(value = [CascadeType.ALL])
     @BatchSize(size = 100)
     val utbetalinger: List<Utbetaling>,
 ) : java.io.Serializable {
