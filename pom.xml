@@ -20,7 +20,6 @@
 		<testcontainers.version>2.0.2</testcontainers.version>
 		<token-validation.version>6.0.0</token-validation.version>
 		<springdoc-openapi.version>3.0.0</springdoc-openapi.version>
-		<httpclient.version>4.5.14</httpclient.version>
 		<logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
 		<logback-syslog4j.version>1.0.0</logback-syslog4j.version>
 		<db-util.version>1.0.7</db-util.version>
