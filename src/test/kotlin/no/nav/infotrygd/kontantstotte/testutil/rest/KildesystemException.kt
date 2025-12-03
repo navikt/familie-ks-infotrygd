@@ -12,9 +12,9 @@ class KildesystemException(
     val remoteUrl: URI? = null,
     val remoteMethod: HttpMethod? = null,
     cause: Throwable? = null,
-    private val additionalResponseHeaders: Map<String, List<String>> = mapOf()
+    private val additionalResponseHeaders: Map<String, List<String>> = mapOf(),
 ) : ResponseStatusException(status ?: HttpStatus.INTERNAL_SERVER_ERROR, genererMelding(reason, remoteMethod, remoteUrl), cause) {
-    override fun getResponseHeaders(): HttpHeaders {
+    override fun getHeaders(): HttpHeaders {
         val headers = additionalResponseHeaders
         if (headers.isEmpty()) {
             return HttpHeaders.EMPTY
@@ -22,7 +22,8 @@ class KildesystemException(
         val result = HttpHeaders()
         headers.forEach { (headerName: String, headerValues: List<String>) ->
             result.addAll(
-                headerName, headerValues
+                headerName,
+                headerValues,
             )
         }
         return result
@@ -32,7 +33,6 @@ class KildesystemException(
 private fun genererMelding(
     reason: String,
     remoteMethod: HttpMethod?,
-    remoteUrl: URI?
-): String {
-    return "[$reason ${remoteMethod ?: ""} ${remoteUrl?.scheme ?: ""}://${remoteUrl?.host ?: ""}:${remoteUrl?.port ?: ""}${remoteUrl?.path ?: ""}"
-}
+    remoteUrl: URI?,
+): String =
+    "[$reason ${remoteMethod ?: ""} ${remoteUrl?.scheme ?: ""}://${remoteUrl?.host ?: ""}:${remoteUrl?.port ?: ""}${remoteUrl?.path ?: ""}"

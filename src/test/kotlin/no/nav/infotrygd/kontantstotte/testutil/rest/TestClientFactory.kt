@@ -3,7 +3,7 @@ package no.nav.infotrygd.kontantstotte.testutil.rest
 import com.nimbusds.jose.JOSEObjectType
 import no.nav.security.mock.oauth2.MockOAuth2Server
 import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback
-import org.springframework.boot.web.client.RestTemplateBuilder
+import org.springframework.boot.restclient.RestTemplateBuilder
 import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpRequest
@@ -20,47 +20,48 @@ class TestClientException(
     val status: HttpStatusCode,
     val remoteUrl: URI,
     val remoteMethod: HttpMethod,
-    message: String
+    message: String,
 ) : RuntimeException(message)
 
 @Profile("test")
 @Component
 class TestClientFactory(
     private val restTemplateBuilder: RestTemplateBuilder,
-    private val server: MockOAuth2Server
+    private val server: MockOAuth2Server,
 ) {
-
-    fun get(port: Int, sub: String = "12345678910"): TestClient {
+    fun get(
+        port: Int,
+        sub: String = "12345678910",
+    ): TestClient {
         val grupper = listOf<String>("gruppe-123")
         val roller = listOf<String>("access_as_application")
         return TestClient(
             restTemplateBuilder(port)
                 .additionalInterceptors(MockOAuth2ServerAccessTokenInterceptor(grupper, roller, sub))
-                .build()
+                .build(),
         )
     }
 
-    fun getNoAuth(port: Int): TestClient {
-        return TestClient(restTemplateBuilder(port).build())
-    }
+    fun getNoAuth(port: Int): TestClient = TestClient(restTemplateBuilder(port).build())
 
-    private fun restTemplateBuilder(port: Int) = restTemplateBuilder
-        .errorHandler(TestErrorHandler())
-        .rootUri("http://localhost:$port")
-        .interceptors(ExceptionHandlerInterceptor())
+    private fun restTemplateBuilder(port: Int) =
+        restTemplateBuilder
+            .errorHandler(TestErrorHandler())
+            .rootUri("http://localhost:$port")
+            .interceptors(ExceptionHandlerInterceptor())
 
-    private inner class TestErrorHandler(): ResponseErrorHandler {
+    private inner class TestErrorHandler : ResponseErrorHandler {
         override fun hasError(response: ClientHttpResponse): Boolean {
-            val rawStatusCode = response.rawStatusCode
+            val rawStatusCode = response.statusCode.value()
             val series = HttpStatus.Series.resolve(rawStatusCode)
             return series == HttpStatus.Series.CLIENT_ERROR || series == HttpStatus.Series.SERVER_ERROR
         }
 
-        override fun handleError(response: ClientHttpResponse) {
-            throw IllegalArgumentException("Not implemented")
-        }
-
-        override fun handleError(url: URI, method: HttpMethod, response: ClientHttpResponse) {
+        override fun handleError(
+            url: URI,
+            method: HttpMethod,
+            response: ClientHttpResponse,
+        ) {
             val status = response.statusCode
             val contentType = response.headers.contentType
 
@@ -70,28 +71,33 @@ class TestClientFactory(
                 status = status,
                 remoteUrl = url,
                 remoteMethod = method,
-                message = "Feil ved REST-kall: $status $method - $url\n$body"
+                message = "Feil ved REST-kall: $status $method - $url\n$body",
             )
         }
     }
 
-    private inner class MockOAuth2ServerAccessTokenInterceptor(private val grupper: List<String>, private val roller: List<String>, val sub: String) : ClientHttpRequestInterceptor {
+    private inner class MockOAuth2ServerAccessTokenInterceptor(
+        private val grupper: List<String>,
+        private val roller: List<String>,
+        val sub: String,
+    ) : ClientHttpRequestInterceptor {
         override fun intercept(
             request: HttpRequest,
             body: ByteArray,
-            execution: ClientHttpRequestExecution
+            execution: ClientHttpRequestExecution,
         ): ClientHttpResponse {
-            val token = server.issueToken(
-                issuerId = "azuread",
-                "theclientid",
-                DefaultOAuth2TokenCallback(
+            val token =
+                server.issueToken(
                     issuerId = "azuread",
-                    subject = sub,
-                    audience = listOf("familie-ks-infotrygd-test"),
-                    typeHeader = JOSEObjectType.JWT.type,
-                    claims = mapOf("groups" to grupper, "roles" to roller)
+                    "theclientid",
+                    DefaultOAuth2TokenCallback(
+                        issuerId = "azuread",
+                        subject = sub,
+                        audience = listOf("familie-ks-infotrygd-test"),
+                        typeHeader = JOSEObjectType.JWT.type,
+                        claims = mapOf("groups" to grupper, "roles" to roller),
+                    ),
                 )
-            )
             request.headers.setBearerAuth(token.serialize())
             return execution.execute(request, body)
         }
