@@ -14,7 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner
 @DataJpaTest
 @ActiveProfiles("test")
 class StonadRepositoryTest {
-
     @Autowired
     private lateinit var stonadRepository: StonadRepository
 
@@ -26,11 +25,12 @@ class StonadRepositoryTest {
         val sf = StonadFactory()
         val barn = sf.barn()
         val utbetaling = sf.utbetaling()
-        val stonad = sf.stonad(
-            barnEksempler = listOf(barn),
-            utbetalingerEksempler = listOf(utbetaling),
-            opphoertVfom = "000000",
-        )
+        val stonad =
+            sf.stonad(
+                barnEksempler = listOf(barn),
+                utbetalingerEksempler = listOf(utbetaling),
+                opphoertVfom = "000000",
+            )
 
         stonadRepository.save(stonad)
 
@@ -55,12 +55,12 @@ class StonadRepositoryTest {
         val sf = StonadFactory()
         val barn = sf.barn()
         val utbetaling = sf.utbetaling()
-        val stonad = sf.stonad(
-            barnEksempler = listOf(barn),
-            utbetalingerEksempler = listOf(utbetaling),
-            opphoertVfom = "000000",
-
-        )
+        val stonad =
+            sf.stonad(
+                barnEksempler = listOf(barn),
+                utbetalingerEksempler = listOf(utbetaling),
+                opphoertVfom = "000000",
+            )
 
         stonadRepository.save(stonad)
 

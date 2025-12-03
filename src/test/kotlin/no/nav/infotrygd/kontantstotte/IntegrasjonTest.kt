@@ -33,11 +33,12 @@ internal class IntegrasjonTest {
         val stonad = sf.stonad(barnEksempler = listOf(sf.barn()))
         stonadRepository.save(stonad)
 
-        val res = testClientFactory.get(port).hentPerioder(
-            InnsynRequest(
-                barn = listOf(stonad.fnr.asString),
-            ),
-        )
+        val res =
+            testClientFactory.get(port).hentPerioder(
+                InnsynRequest(
+                    barn = listOf(stonad.fnr.asString),
+                ),
+            )
 
         assertThat(res.data).hasSameSizeAs(listOf(stonad))
     }
@@ -47,11 +48,12 @@ internal class IntegrasjonTest {
         val sf = StonadFactory()
         val barn = sf.barn()
         val utbetaling = sf.utbetaling()
-        val stonad = sf.stonad(
-            barnEksempler = listOf(barn),
-            utbetalingerEksempler = listOf(utbetaling),
-            opphoertVfom = "000000",
-        )
+        val stonad =
+            sf.stonad(
+                barnEksempler = listOf(barn),
+                utbetalingerEksempler = listOf(utbetaling),
+                opphoertVfom = "000000",
+            )
 
         stonadRepository.save(stonad)
 
@@ -62,7 +64,10 @@ internal class IntegrasjonTest {
 
     @Test
     internal fun `hentPerioder noAuth`() {
-        val e = assertThrows<TestClientException> { testClientFactory.getNoAuth(port).hentPerioder(InnsynRequest(barn = listOf(TestData.foedselsNr().toString()))) }
+        val e =
+            assertThrows<TestClientException> {
+                testClientFactory.getNoAuth(port).hentPerioder(InnsynRequest(barn = listOf(TestData.foedselsNr().toString())))
+            }
         assertThat(e.status).isEqualTo(HttpStatus.UNAUTHORIZED)
     }
 }
