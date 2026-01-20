@@ -46,8 +46,6 @@ spec:
   ingresses:
   - https://familie-ks-infotrygd.dev-fss-pub.nais.io
   - https://familie-ks-infotrygd.dev.intern.nav.no/
-  secureLogs:
-    enabled: true
   vault:
     enabled: true
     paths:
