@@ -5,7 +5,6 @@ import no.nav.infotrygd.kontantstotte.dto.InnsynRequest
 import no.nav.infotrygd.kontantstotte.dto.InnsynResponse
 import no.nav.infotrygd.kontantstotte.service.InnsynService
 import no.nav.infotrygd.kontantstotte.service.SøkerOgBarn
-import no.nav.infotrygd.kontantstotte.service.TilgangskontrollService
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController
 @Timed(value = "infotrygd_kontantstottev2_innsyn_controller", percentiles = [0.5, 0.95])
 class InnsynController(
     private val innsynService: InnsynService,
-    private val tilgangskontrollService: TilgangskontrollService,
+   // private val tilgangskontrollService: TilgangskontrollService,
 ) {
     @PostMapping("/hentPerioderMedKontantstøtteIInfotrygd", "/hentPerioderMedKontantstotteIInfotrygd")
     fun hentPerioder(
         @RequestBody req: InnsynRequest,
     ): InnsynResponse {
-        tilgangskontrollService.sjekkTilgang()
+        //tilgangskontrollService.sjekkTilgang()
         return innsynService.hentDataForSøker(req)
     }
 
@@ -33,19 +32,19 @@ class InnsynController(
     fun hentPerioderForBarn(
         @RequestBody req: InnsynRequest,
     ): InnsynResponse {
-        tilgangskontrollService.sjekkTilgang()
+        //tilgangskontrollService.sjekkTilgang()
         return innsynService.hentDataForBarn(req)
     }
 
     @GetMapping("/hentidentertilbarnmedlopendesaker")
     fun harKontantstotteIInfotrygd(): List<String> {
-        tilgangskontrollService.sjekkTilgang()
+        //tilgangskontrollService.sjekkTilgang()
         return innsynService.hentbarnmedløpendekontantstøtte()
     }
 
     @GetMapping("/hent-soekere-og-barn-med-loepende-kontantstoette")
     fun hentSøkereOgBarnMedLøpendeKontantstøtteIInfotrygd(): List<SøkerOgBarn> {
-        tilgangskontrollService.sjekkTilgang()
+        //tilgangskontrollService.sjekkTilgang()
         return innsynService.hentSøkerOgBarnMedLøpendeKontantstøtte()
     }
 }

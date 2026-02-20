@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
-
+/*
 @Service
 class TilgangskontrollService(
     private val tokenValidationContextHolder: TokenValidationContextHolder,
@@ -32,3 +32,5 @@ class TilgangskontrollService(
         const val ACCESS_AS_APPLICATION_ROLE = "access_as_application"
     }
 }
+
+ */
