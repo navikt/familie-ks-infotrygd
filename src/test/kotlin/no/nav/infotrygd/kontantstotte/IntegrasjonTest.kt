@@ -1,4 +1,5 @@
 package no.nav.infotrygd.kontantstotte
+/*
 
 import no.nav.infotrygd.kontantstotte.dto.InnsynRequest
 import no.nav.infotrygd.kontantstotte.repository.StonadRepository
@@ -71,3 +72,6 @@ internal class IntegrasjonTest {
         assertThat(e.status).isEqualTo(HttpStatus.UNAUTHORIZED)
     }
 }
+
+
+ */

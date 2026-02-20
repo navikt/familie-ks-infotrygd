@@ -1,10 +1,76 @@
-package no.nav.infotrygd.kontantstotte.config
+package no.nav.gjenlevende.bs.sak.config
 
-import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
-import org.springframework.boot.context.properties.EnableConfigurationProperties
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.web.SecurityFilterChain
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
 
-@EnableJwtTokenValidation(ignore = ["org.springframework", "org.springdoc"])
-@EnableConfigurationProperties(DatasourceConfiguration::class)
 @Configuration
-class SecurityConfiguration
+@EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
+@Profile("!local-mock")
+open class SecurityConfiguration(
+) {
+    @Bean
+    open fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+        http
+            .cors { it.configurationSource(corsConfigurationSource()) }
+            .authorizeHttpRequests { auth ->
+                auth
+                    .requestMatchers(
+                        "/internal/**",
+                        "/actuator/**",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**",
+                        "/swagger-ui.html",
+                        "/api/test/infotrygd/uautentisert",
+                    ).permitAll()
+                    .anyRequest()
+                    .authenticated()
+            }.oauth2ResourceServer { oauth2 ->
+                oauth2.jwt { jwt ->
+                    jwt.jwtAuthenticationConverter { jwt ->
+                        JwtAuthenticationToken(jwt)
+                    }
+                }
+            }.csrf { it.disable() }
+
+        return http.build()
+    }
+
+    @Bean
+    open fun corsConfigurationSource(): CorsConfigurationSource {
+        val configuration = CorsConfiguration()
+
+        configuration.allowedOrigins =
+            listOf(
+                "https://gjenlevende-bs.intern.dev.nav.no",
+                "https://gjenlevende-bs.ansatt.dev.nav.no",
+                "http://localhost:8080",
+                "http://localhost:3000",
+            )
+        configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
+        configuration.allowedHeaders =
+            listOf(
+                "Content-Type",
+                "Accept",
+                "Authorization",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers",
+            )
+        configuration.allowCredentials = true
+        configuration.maxAge = 3600L
+
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
+    }
+}

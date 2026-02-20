@@ -2,7 +2,7 @@ package no.nav.infotrygd.kontantstotte.model.converters
 
 import no.nav.commons.foedselsnummer.Foedselsnummer
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class ReversedLongFoedselsnummerConverterTest {
 
@@ -16,8 +16,8 @@ class ReversedLongFoedselsnummerConverterTest {
 
     @Test
     fun convertToEntityAttribute() {
-        val full  = 54010150572L
-        val short =    10100382L
+        val full = 54010150572L
+        val short = 10100382L
 
         println()
 

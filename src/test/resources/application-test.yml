@@ -27,6 +27,7 @@ no.nav.security.jwt:
 NAIS_APP_NAME: familie-ks-infotrygd
 AZURE_APP_CLIENT_ID: testid
 AZURE_APP_CLIENT_SECRET: testsecret
+AZURE_OPENID_CONFIG_ISSUER: http://localhost:${mock-oauth2-server.port}/azuread
 
 
 vault:

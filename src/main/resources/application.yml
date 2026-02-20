@@ -18,6 +18,15 @@ spring:
   sql:
     init:
       platform: ${APP_DATASOURCE_PLATFORM}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${AZURE_OPENID_CONFIG_ISSUER}
+          audiences: ${AZURE_APP_CLIENT_ID}
+        proxy:
+          host:  "https://webproxy-nais.nav.no"
+          port: 8088
 
 management:
   endpoint:
@@ -30,14 +39,6 @@ management:
 
 #oidc...
 http.proxy.parametername: notused
-
-no.nav.security.jwt:
-  expirythreshold: 60 #threshold in minutes until token expires
-  issuer:
-    azuread:
-      discoveryurl: ${AZURE_APP_WELL_KNOWN_URL}
-      accepted_audience: ${AZURE_APP_CLIENT_ID}
-      proxyurl: ${APP_AZURE_PROXY_URL}
 
 springdoc:
   packages-to-scan: "no.nav.infotrygd.kontantstotte"

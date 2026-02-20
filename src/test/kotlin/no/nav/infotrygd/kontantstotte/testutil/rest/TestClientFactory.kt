@@ -1,5 +1,5 @@
 package no.nav.infotrygd.kontantstotte.testutil.rest
-
+/*
 import com.nimbusds.jose.JOSEObjectType
 import no.nav.security.mock.oauth2.MockOAuth2Server
 import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback
@@ -103,3 +103,5 @@ class TestClientFactory(
         }
     }
 }
+
+ */

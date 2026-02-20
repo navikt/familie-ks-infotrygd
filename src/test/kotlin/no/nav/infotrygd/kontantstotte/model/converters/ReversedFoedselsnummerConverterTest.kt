@@ -2,7 +2,7 @@ package no.nav.infotrygd.kontantstotte.model.converters
 
 import no.nav.commons.foedselsnummer.Foedselsnummer
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 internal class ReversedFoedselsnummerConverterTest {
 
