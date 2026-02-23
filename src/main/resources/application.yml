@@ -23,7 +23,9 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: ${AZURE_OPENID_CONFIG_ISSUER}
-          audiences: ${AZURE_APP_CLIENT_ID}
+          audiences:
+            - ${AZURE_APP_CLIENT_ID}
+            - api://${AZURE_APP_CLIENT_ID}
         proxy:
           host:  "https://webproxy-nais.nav.no"
           port: 8088
