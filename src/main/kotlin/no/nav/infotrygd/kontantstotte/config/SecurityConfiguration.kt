@@ -3,13 +3,10 @@ package no.nav.infotrygd.kontantstotte.config
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
-import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.invoke
-import org.springframework.security.oauth2.jwt.JwtTypeValidator.jwt
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
@@ -41,18 +38,16 @@ open class SecurityConfiguration {
         return http.build()
     }
 
-    @Bean
     open fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration()
 
         configuration.allowedOrigins =
             listOf(
-                "https://gjenlevende-bs.intern.dev.nav.no",
-                "https://gjenlevende-bs.ansatt.dev.nav.no",
+                "https://familie-ks-infotrygd.intern.dev.nav.no",
+                "https://familie-ks-infotrygd.intern.nav.no",
                 "http://localhost:8080",
-                "http://localhost:3000",
             )
-        configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
+        configuration.allowedMethods = listOf("GET", "POST")
         configuration.allowedHeaders =
             listOf(
                 "Content-Type",
