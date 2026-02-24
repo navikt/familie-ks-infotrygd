@@ -16,7 +16,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 @Profile("!local-mock")
-open class SecurityConfiguration {
+open class SecurityConfiguration(
+    private val azureJwtAuthenticationConverter: AzureJwtAuthenticationConverter,
+) {
     @Bean
     open fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http {
@@ -31,7 +33,9 @@ open class SecurityConfiguration {
                 authorize(anyRequest, authenticated)
             }
             oauth2ResourceServer {
-                jwt { }
+                jwt {
+                    jwtAuthenticationConverter = azureJwtAuthenticationConverter
+                }
             }
             csrf { disable() }
         }
