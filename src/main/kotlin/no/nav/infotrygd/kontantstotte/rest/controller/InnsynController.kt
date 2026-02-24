@@ -12,19 +12,18 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-@PreAuthorize("isAuthenticated()")
 @RestController
 @RequestMapping("/api")
 @Timed(value = "infotrygd_kontantstottev2_innsyn_controller", percentiles = [0.5, 0.95])
 class InnsynController(
     private val innsynService: InnsynService,
-   // private val tilgangskontrollService: TilgangskontrollService,
+    // private val tilgangskontrollService: TilgangskontrollService,
 ) {
     @PostMapping("/hentPerioderMedKontantstøtteIInfotrygd", "/hentPerioderMedKontantstotteIInfotrygd")
     fun hentPerioder(
         @RequestBody req: InnsynRequest,
     ): InnsynResponse {
-        //tilgangskontrollService.sjekkTilgang()
+        // tilgangskontrollService.sjekkTilgang()
         return innsynService.hentDataForSøker(req)
     }
 
@@ -32,19 +31,19 @@ class InnsynController(
     fun hentPerioderForBarn(
         @RequestBody req: InnsynRequest,
     ): InnsynResponse {
-        //tilgangskontrollService.sjekkTilgang()
+        // tilgangskontrollService.sjekkTilgang()
         return innsynService.hentDataForBarn(req)
     }
 
     @GetMapping("/hentidentertilbarnmedlopendesaker")
     fun harKontantstotteIInfotrygd(): List<String> {
-        //tilgangskontrollService.sjekkTilgang()
+        // tilgangskontrollService.sjekkTilgang()
         return innsynService.hentbarnmedløpendekontantstøtte()
     }
 
     @GetMapping("/hent-soekere-og-barn-med-loepende-kontantstoette")
     fun hentSøkereOgBarnMedLøpendeKontantstøtteIInfotrygd(): List<SøkerOgBarn> {
-        //tilgangskontrollService.sjekkTilgang()
+        // tilgangskontrollService.sjekkTilgang()
         return innsynService.hentSøkerOgBarnMedLøpendeKontantstøtte()
     }
 }

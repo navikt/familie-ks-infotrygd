@@ -3,9 +3,11 @@ package no.nav.infotrygd.kontantstotte.config
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
+import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.oauth2.jwt.JwtTypeValidator.jwt
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.web.cors.CorsConfiguration
@@ -34,11 +36,7 @@ open class SecurityConfiguration {
                     .anyRequest()
                     .authenticated()
             }.oauth2ResourceServer { oauth2 ->
-                oauth2.jwt { jwt ->
-                    jwt.jwtAuthenticationConverter { jwt ->
-                        JwtAuthenticationToken(jwt)
-                    }
-                }
+                oauth2.jwt(Customizer.withDefaults())
             }.csrf { it.disable() }
 
         return http.build()
