@@ -12,9 +12,8 @@ import org.springframework.web.server.ResponseStatusException
 class TilgangskontrollService(
     private val tokenValidationContextHolder: TokenValidationContextHolder,
     @Value("\${TEAMFAMILIE_SAKSBEHANDLER_GROUP_ID}") private val saksbehandlerGroupId: String,
-    @Value("\${TEAMFAMILIE_FORVALTNING_GROUP_ID}") private val forvalterGroupId: String
+    @Value("\${TEAMFAMILIE_FORVALTNING_GROUP_ID}") private val forvalterGroupId: String,
 ) {
-
     val secureLogger: Logger = LoggerFactory.getLogger("secureLogger")
 
     fun sjekkTilgang() {
@@ -29,8 +28,6 @@ class TilgangskontrollService(
     }
 
     companion object {
-        const val ACCESS_AS_APPLICATION_ROLE = "access_as_application"
     }
 }
-
- */
+*/

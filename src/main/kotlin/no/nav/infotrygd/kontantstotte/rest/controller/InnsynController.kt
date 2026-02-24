@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-@PreAuthorize("isAuthenticated()")
+@PreAuthorize("hasRole('FORVALTER') or hasRole('ACCESS_AS_APPLICATION')")
 @RestController
 @RequestMapping("/api")
 @Timed(value = "infotrygd_kontantstottev2_innsyn_controller", percentiles = [0.5, 0.95])
