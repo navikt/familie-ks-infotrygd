@@ -7,6 +7,7 @@ import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.oauth2.jwt.JwtTypeValidator.jwt
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
 import org.springframework.security.web.SecurityFilterChain
@@ -21,24 +22,22 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 open class SecurityConfiguration {
     @Bean
     open fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
-        http
-            .cors { it.configurationSource(corsConfigurationSource()) }
-            .authorizeHttpRequests { auth ->
-                auth
-                    .requestMatchers(
-                        "/internal/**",
-                        "/actuator/**",
-                        "/swagger-ui/**",
-                        "/v3/api-docs/**",
-                        "/swagger-ui.html",
-                        "/api/test/infotrygd/uautentisert",
-                    ).permitAll()
-                    .anyRequest()
-                    .authenticated()
-            }.oauth2ResourceServer { oauth2 ->
-                oauth2.jwt(Customizer.withDefaults())
-            }.csrf { it.disable() }
-
+        http {
+            cors { configurationSource = corsConfigurationSource() }
+            authorizeHttpRequests {
+                authorize("/internal/**", permitAll)
+                authorize("/actuator/**", permitAll)
+                authorize("/swagger-ui/**", permitAll)
+                authorize("/v3/api-docs/**", permitAll)
+                authorize("/swagger-ui.html", permitAll)
+                authorize("/api/test/infotrygd/uautentisert", permitAll)
+                authorize(anyRequest, authenticated)
+            }
+            oauth2ResourceServer {
+                jwt { }
+            }
+            csrf { disable() }
+        }
         return http.build()
     }
 
