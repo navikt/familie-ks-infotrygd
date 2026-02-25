@@ -1,7 +1,6 @@
 
 
 fun main() {
-    // no.nav.infotrygd.kontantstotte.main(arrayOf("--spring.profiles.active=dev,test,demoData,noauth"))
     no.nav.infotrygd.kontantstotte
-        .main(arrayOf("--spring.profiles.active=dev,test,demoData"))
+        .main(arrayOf("--spring.profiles.active=test"))
 }
