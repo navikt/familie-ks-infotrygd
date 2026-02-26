@@ -2,11 +2,10 @@ package no.nav.commons.foedselsnummer.testutils
 
 import no.nav.commons.foedselsnummer.Kjoenn
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
 internal class KonkretFoedselsnummerGeneratorTest {
-
     @Test
     fun generer() {
         val dato = LocalDate.of(2000, 10, 15)

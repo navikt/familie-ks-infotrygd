@@ -20,7 +20,6 @@ open class SecurityConfiguration {
     @Bean
     open fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http {
-            cors { configurationSource = corsConfigurationSource() }
             authorizeHttpRequests {
                 authorize("/internal/**", permitAll)
                 authorize("/actuator/**", permitAll)

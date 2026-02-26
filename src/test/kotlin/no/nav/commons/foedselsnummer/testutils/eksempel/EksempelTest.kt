@@ -4,7 +4,7 @@ import no.nav.commons.foedselsnummer.Foedselsnummer
 import no.nav.commons.foedselsnummer.Kjoenn
 import no.nav.commons.foedselsnummer.testutils.FoedselsnummerGenerator
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
 class EksempelTest {
@@ -25,10 +25,12 @@ class EksempelTest {
     @Test
     fun genererFodeselsnummerMedParametre() {
         val generator = FoedselsnummerGenerator()
-        val fnr = generator.foedselsnummer(
-            foedselsdato = LocalDate.of(2019, 1, 2),
-            kjoenn = Kjoenn.KVINNE,
-            dNummer = false)
+        val fnr =
+            generator.foedselsnummer(
+                foedselsdato = LocalDate.of(2019, 1, 2),
+                kjoenn = Kjoenn.KVINNE,
+                dNummer = false,
+            )
 
         assertThat(fnr.asString).startsWith("020119")
         assertThat(fnr.kjoenn).isEqualTo(Kjoenn.KVINNE)

@@ -1,33 +1,28 @@
 package no.nav.infotrygd.kontantstotte
-/*
-import no.nav.infotrygd.kontantstotte.testutil.rest.TestClientFactory
-import org.junit.Test
-import org.junit.runner.RunWith
+
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.resttestclient.TestRestTemplate
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate
+import org.springframework.boot.resttestclient.getForObject
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.junit4.SpringRunner
 
-@RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ActiveProfiles("test")
+@AutoConfigureTestRestTemplate
 class InfotrygdApplicationTest {
     @LocalServerPort
-    var port: kotlin.Int = 0
+    var port: Int = 0
 
     @Autowired
-    private lateinit var testClientFactory: TestClientFactory
-
-    @Test
-    fun contextLoads() {
-    }
+    private lateinit var testRestTemplate: TestRestTemplate
 
     @Test
     fun health() {
-        testClientFactory.getNoAuth(port).health()
+        testRestTemplate.getForObject<String>("/actuator/health")
     }
 }
-
-
- */
