@@ -15,19 +15,12 @@ spring:
     init:
       platform: oracle
       mode: always
-
-no.nav.security.jwt:
-  expirythreshold: 60 #threshold in minutes until token expires
-  issuer:
-    azuread:
-      discoveryurl: http://localhost:${mock-oauth2-server.port}/azuread/.well-known/openid-configuration
-      accepted_audience: familie-ks-infotrygd-test
-      proxyurl: ~
+      continue-on-error: true
 
 NAIS_APP_NAME: familie-ks-infotrygd
 AZURE_APP_CLIENT_ID: testid
 AZURE_APP_CLIENT_SECRET: testsecret
-AZURE_OPENID_CONFIG_ISSUER: http://localhost:${mock-oauth2-server.port}/azuread
+AZURE_OPENID_CONFIG_ISSUER: http://localhost:8080/azuread
 
 
 vault:
