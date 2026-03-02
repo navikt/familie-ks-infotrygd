@@ -17,15 +17,15 @@ class TilgangskontrollService(
     val secureLogger: Logger = LoggerFactory.getLogger("secureLogger")
 
     fun sjekkTilgang() {
-        val jwt = (SecurityContextHolder.getContext().authentication as? JwtAuthenticationToken)?.token
-        val roles = jwt?.getClaimAsStringList("roles") ?: emptyList()
-        val groups = jwt?.getClaimAsStringList("groups") ?: emptyList()
-
-        secureLogger.info("Roller: $roles")
-        secureLogger.info("Grupper: $groups")
-        if (!(roles.contains(ACCESS_AS_APPLICATION_ROLE) || groups.contains(saksbehandlerGroupId) || groups.contains(forvalterGroupId))) {
-            throw ResponseStatusException(HttpStatus.FORBIDDEN, "User har ikke tilgang til å kalle tjenesten!")
-        }
+//        val jwt = (SecurityContextHolder.getContext().authentication as? JwtAuthenticationToken)?.token
+//        val roles = jwt?.getClaimAsStringList("roles") ?: emptyList()
+//        val groups = jwt?.getClaimAsStringList("groups") ?: emptyList()
+//
+//        secureLogger.info("Roller: $roles")
+//        secureLogger.info("Grupper: $groups")
+//        if (!(roles.contains(ACCESS_AS_APPLICATION_ROLE) || groups.contains(saksbehandlerGroupId) || groups.contains(forvalterGroupId))) {
+//            throw ResponseStatusException(HttpStatus.FORBIDDEN, "User har ikke tilgang til å kalle tjenesten!")
+//        }
     }
 
     companion object {

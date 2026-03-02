@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc
 import org.springframework.http.MediaType
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
@@ -37,7 +38,15 @@ internal class IntegrasjonTest {
         val result =
             mockMvc
                 .post("/api/hentPerioderMedKontantstøtteIInfotrygd") {
-                    with(jwt().jwt { it.claim("roles", listOf(ACCESS_AS_APPLICATION_ROLE)) })
+                    with(
+                        jwt()
+                            .jwt {
+                                it.claim(
+                                    "roles",
+                                    listOf(ACCESS_AS_APPLICATION_ROLE),
+                                )
+                            }.authorities(SimpleGrantedAuthority("ROLE_APPLICATION")),
+                    )
                     contentType = MediaType.APPLICATION_JSON
                     content = jsonMapper().writeValueAsString(InnsynRequest(barn = listOf(stonad.fnr.asString)))
                 }.andExpect {
@@ -49,7 +58,7 @@ internal class IntegrasjonTest {
     }
 
     @Test
-    fun `skal hente perioder med token med saksbehandlerrolle`() {
+    fun `skal hente perioder med token med forvalterRolle`() {
         val sf = StonadFactory()
         val stonad = sf.stonad(barnEksempler = listOf(sf.barn()))
         stonadRepository.save(stonad)
@@ -57,7 +66,15 @@ internal class IntegrasjonTest {
         val result =
             mockMvc
                 .post("/api/hentPerioderMedKontantstøtteIInfotrygd") {
-                    with(jwt().jwt { it.claim("groups", listOf("c7e0b108-7ae6-432c-9ab4-946174c240c0")) })
+                    with(
+                        jwt()
+                            .jwt {
+                                it.claim(
+                                    "groups",
+                                    listOf("c7e0b108-7ae6-432c-9ab4-946174c240c0"),
+                                )
+                            }.authorities(SimpleGrantedAuthority("ROLE_FORVALTER")),
+                    )
                     contentType = MediaType.APPLICATION_JSON
                     content = jsonMapper().writeValueAsString(InnsynRequest(barn = listOf(stonad.fnr.asString)))
                 }.andExpect {
@@ -116,7 +133,12 @@ internal class IntegrasjonTest {
         val result =
             mockMvc
                 .get("/api/hentidentertilbarnmedlopendesaker") {
-                    with(jwt().jwt { it.claim("roles", listOf(ACCESS_AS_APPLICATION_ROLE)) })
+                    with(
+                        jwt()
+                            .jwt {
+                                it.claim("roles", listOf(ACCESS_AS_APPLICATION_ROLE))
+                            }.authorities(SimpleGrantedAuthority("ROLE_APPLICATION")),
+                    )
                 }.andExpect {
                     status { isOk() }
                 }.andReturn()
@@ -125,13 +147,4 @@ internal class IntegrasjonTest {
 
         assertThat(response).hasSize(1)
     }
-
-//    @Test
-//    internal fun `hentPerioder noAuth`() {
-//        val e =
-//            assertThrows<TestClientException> {
-//                testClientFactory.getNoAuth(port).hentPerioder(InnsynRequest(barn = listOf(TestData.foedselsNr().toString())))
-//            }
-//        assertThat(e.status).isEqualTo(HttpStatus.UNAUTHORIZED)
-//    }
 }

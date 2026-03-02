@@ -28,7 +28,6 @@ open class SecurityConfiguration(
                 authorize("/swagger-ui/**", permitAll)
                 authorize("/v3/api-docs/**", permitAll)
                 authorize("/swagger-ui.html", permitAll)
-                authorize("/api/test/infotrygd/uautentisert", permitAll)
                 authorize("/tables", permitAll)
                 authorize(anyRequest, authenticated)
             }
