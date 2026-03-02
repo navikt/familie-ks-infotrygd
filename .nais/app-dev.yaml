@@ -54,12 +54,6 @@ spec:
   accessPolicy:
     inbound:
       rules:
-        - application: "bidrag-grunnlag"
-          namespace: bidrag
-          cluster: dev-gcp
-        - application: "bidrag-grunnlag-feature"
-          namespace: bidrag
-          cluster: dev-gcp
         - application: "familie-ks-sak"
           namespace: teamfamilie
           cluster: dev-gcp
