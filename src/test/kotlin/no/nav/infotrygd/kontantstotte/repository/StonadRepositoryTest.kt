@@ -20,9 +20,10 @@ class StonadRepositoryTest {
     @Autowired
     private lateinit var entityManager: EntityManager
 
+    private val sf = StonadFactory()
+
     @Test
     fun `alle relasjoner er tilstede`() {
-        val sf = StonadFactory()
         val barn = sf.barn()
         val utbetaling = sf.utbetaling()
         val stonad =
@@ -52,7 +53,6 @@ class StonadRepositoryTest {
 
     @Test
     fun `test hent alle barn med løpende fagsak`() {
-        val sf = StonadFactory()
         val barn = sf.barn()
         val utbetaling = sf.utbetaling()
         val stonad =
