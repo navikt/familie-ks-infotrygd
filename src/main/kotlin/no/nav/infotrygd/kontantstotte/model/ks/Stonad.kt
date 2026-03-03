@@ -60,4 +60,7 @@ class Stonad(
 
     val belop: Int?
         get() = utbetalinger.filter { it.type.trim() == "M" }.firstOrNull()?.belop
+
+    override fun toString(): String =
+        "Stonad(id=$id, region=$region, personkey=$personkey, iverfomSeq=$iverfomSeq, virkfomSeq=$virkfomSeq, opphoertVfom=$opphoertVfom)"
 }
