@@ -3,6 +3,7 @@ package no.nav.infotrygd.kontantstotte.repository
 import jakarta.persistence.EntityManager
 import no.nav.infotrygd.kontantstotte.testutil.AbstractStonadFactoryTest
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,6 +22,7 @@ class StonadRepositoryTest : AbstractStonadFactoryTest() {
     private lateinit var entityManager: EntityManager
 
     @Test
+    @Order(2)
     fun `alle relasjoner er tilstede`() {
         val barn = sf.barn()
         val utbetaling = sf.utbetaling()
@@ -50,6 +52,7 @@ class StonadRepositoryTest : AbstractStonadFactoryTest() {
     }
 
     @Test
+    @Order(1)
     fun `test hent alle barn med løpende fagsak`() {
         val barn = sf.barn()
         val utbetaling = sf.utbetaling()
