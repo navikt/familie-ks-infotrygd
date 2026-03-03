@@ -4,6 +4,7 @@ import no.nav.infotrygd.kontantstotte.dto.InnsynRequest
 import no.nav.infotrygd.kontantstotte.dto.InnsynResponse
 import no.nav.infotrygd.kontantstotte.repository.StonadRepository
 import no.nav.infotrygd.kontantstotte.service.TilgangskontrollService.Companion.ACCESS_AS_APPLICATION_ROLE
+import no.nav.infotrygd.kontantstotte.testutil.AbstractStonadFactoryTest
 import no.nav.infotrygd.kontantstotte.testutil.StonadFactory
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -23,7 +24,7 @@ import tools.jackson.module.kotlin.readValue
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
-internal class IntegrasjonTest {
+internal class IntegrasjonTest : AbstractStonadFactoryTest() {
     @Autowired
     private lateinit var stonadRepository: StonadRepository
 
@@ -31,7 +32,6 @@ internal class IntegrasjonTest {
 
     @Test
     fun `skal hente perioder med token med rolle access_as_application`() {
-        val sf = StonadFactory()
         val stonad = sf.stonad(barnEksempler = listOf(sf.barn()))
         stonadRepository.save(stonad)
 
@@ -59,7 +59,6 @@ internal class IntegrasjonTest {
 
     @Test
     fun `skal hente perioder med token med forvalterRolle`() {
-        val sf = StonadFactory()
         val stonad = sf.stonad(barnEksempler = listOf(sf.barn()))
         stonadRepository.save(stonad)
 
@@ -87,7 +86,6 @@ internal class IntegrasjonTest {
 
     @Test
     fun `skal få forbidden hvis man mangler tilgang`() {
-        val sf = StonadFactory()
         val stonad = sf.stonad(barnEksempler = listOf(sf.barn()))
         stonadRepository.save(stonad)
 
@@ -103,7 +101,6 @@ internal class IntegrasjonTest {
 
     @Test
     fun `skal få unauthorized hvis man mangler token`() {
-        val sf = StonadFactory()
         val stonad = sf.stonad(barnEksempler = listOf(sf.barn()))
         stonadRepository.save(stonad)
 
@@ -118,7 +115,6 @@ internal class IntegrasjonTest {
 
     @Test
     fun `Skal hente alle identer med løpende sak`() {
-        val sf = StonadFactory()
         val barn = sf.barn()
         val utbetaling = sf.utbetaling()
         val stonad =
