@@ -22,7 +22,6 @@ class StonadRepositoryTest : AbstractStonadFactoryTest() {
     private lateinit var entityManager: EntityManager
 
     @Test
-    @Order(2)
     fun `alle relasjoner er tilstede`() {
         val barn = sf.barn()
         val utbetaling = sf.utbetaling()
@@ -52,7 +51,6 @@ class StonadRepositoryTest : AbstractStonadFactoryTest() {
     }
 
     @Test
-    @Order(1)
     fun `test hent alle barn med løpende fagsak`() {
         val barn = sf.barn()
         val utbetaling = sf.utbetaling()
@@ -69,9 +67,10 @@ class StonadRepositoryTest : AbstractStonadFactoryTest() {
         entityManager.clear()
 
         val res = stonadRepository.findByOpphoertVfomEquals("000000")
-        assertThat(res).hasSameSizeAs(listOf(stonad))
+        val stønadForPerson = res.filter { it.personkey == stonad.personkey }
+        assertThat(stønadForPerson).hasSameSizeAs(listOf(stonad))
 
-        val resStonad = res[0]
+        val resStonad = stønadForPerson[0]
         assertThat(resStonad.id).isEqualTo(stonad.id)
 
         assertThat(resStonad.barn).hasSameSizeAs(listOf(barn))
