@@ -3,6 +3,7 @@ package no.nav.infotrygd.kontantstotte.repository
 import jakarta.persistence.EntityManager
 import no.nav.infotrygd.kontantstotte.testutil.StonadFactory
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,15 +15,24 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ExtendWith(SpringExtension::class)
 @DataJpaTest
 @ActiveProfiles("test")
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class StonadRepositoryTest {
     @Autowired
     private lateinit var stonadRepository: StonadRepository
 
     @Autowired
+    private lateinit var barnRepository: BarnRepository
+
+    @Autowired
     private lateinit var entityManager: EntityManager
 
     private val sf = StonadFactory()
+
+    @BeforeEach
+    fun setUp() {
+        barnRepository.deleteAll()
+        stonadRepository.deleteAll()
+        entityManager.flush()
+    }
 
     @Test
     fun `alle relasjoner er tilstede`() {
