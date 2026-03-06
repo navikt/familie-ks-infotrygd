@@ -14,9 +14,8 @@ import org.springframework.context.annotation.Profile
 private data class OAuthInfo(
     @JsonProperty("authorization_endpoint")
     val authorizationEndpoint: String,
-
     @JsonProperty("token_endpoint")
-    val tokenEndpoint: String
+    val tokenEndpoint: String,
 )
 
 @Configuration
@@ -27,18 +26,24 @@ class SwaggerConfig(
     @Value("\${TOKEN_URL}")
     val tokenUrl: String,
     @Value("\${API_SCOPE}")
-    val apiScope: String
+    val apiScope: String,
 ) {
-
     @Bean
-    fun kontantstøtteInfotrygdApi(): OpenAPI {
-        return OpenAPI().info(Info().title("Kontantstøtte infotrygd API").version("v1"))
-            .components(Components().addSecuritySchemes("oauth2", securitySchemes()))
-            .addSecurityItem(SecurityRequirement().addList("oauth2", listOf("read", "write")))
-    }
+    fun kontantstøtteInfotrygdApi(): OpenAPI =
+        OpenAPI()
+            .info(Info().title("Kontantstøtte infotrygd API").version("v1"))
+            .components(
+                Components()
+                    .addSecuritySchemes("oauth2", securitySchemes())
+                    .addSecuritySchemes("bearer", bearerTokenSecurityScheme()),
+            ).addSecurityItem(
+                SecurityRequirement()
+                    .addList("oauth2", listOf("read", "write"))
+                    .addList("bearer", listOf("read", "write")),
+            )
 
-    private fun securitySchemes(): SecurityScheme {
-        return SecurityScheme()
+    private fun securitySchemes(): SecurityScheme =
+        SecurityScheme()
             .name("oauth2")
             .type(SecurityScheme.Type.OAUTH2)
             .scheme("oauth2")
@@ -46,19 +51,18 @@ class SwaggerConfig(
             .flows(
                 OAuthFlows()
                     .authorizationCode(
-                        OAuthFlow().authorizationUrl(authorizationUrl)
+                        OAuthFlow()
+                            .authorizationUrl(authorizationUrl)
                             .tokenUrl(tokenUrl)
-                            .scopes(Scopes().addString(apiScope, "read,write"))
-                    )
+                            .scopes(Scopes().addString(apiScope, "read,write")),
+                    ),
             )
-    }
 
-    private fun bearerTokenSecurityScheme(): SecurityScheme {
-        return SecurityScheme()
+    private fun bearerTokenSecurityScheme(): SecurityScheme =
+        SecurityScheme()
             .type(SecurityScheme.Type.APIKEY)
             .scheme("bearer")
             .bearerFormat("JWT")
             .`in`(SecurityScheme.In.HEADER)
             .name("Authorization")
-    }
 }

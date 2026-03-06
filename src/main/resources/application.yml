@@ -18,17 +18,7 @@ spring:
   sql:
     init:
       platform: ${APP_DATASOURCE_PLATFORM}
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${AZURE_OPENID_CONFIG_ISSUER}
-          audiences:
-            - ${AZURE_APP_CLIENT_ID}
-            - api://${AZURE_APP_CLIENT_ID}
-        proxy:
-          host:  "https://webproxy-nais.nav.no"
-          port: 8088
+
 
 management:
   endpoint:
@@ -44,7 +34,7 @@ http.proxy.parametername: notused
 
 springdoc:
   packages-to-scan: "no.nav.infotrygd.kontantstotte"
-  paths-to-match: "/api/**"
+  paths-to-match: "/api/**,/testtoken/**"
   swagger-ui:
     oauth:
       use-pkce-with-authorization-code-grant: true

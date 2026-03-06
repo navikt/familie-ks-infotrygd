@@ -143,6 +143,12 @@
             <artifactId>jackson-module-kotlin</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>no.nav.security</groupId>
+            <artifactId>mock-oauth2-server</artifactId>
+            <version>3.0.1</version>
+            <scope>test</scope>
+        </dependency>
 
 		<dependency>
 			<groupId>com.vladmihalcea</groupId>

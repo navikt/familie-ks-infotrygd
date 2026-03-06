@@ -15,7 +15,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
-@Profile("!local-mock")
 open class SecurityConfiguration(
     private val azureJwtAuthenticationConverter: AzureJwtAuthenticationConverter,
 ) {
@@ -29,6 +28,7 @@ open class SecurityConfiguration(
                 authorize("/v3/api-docs/**", permitAll)
                 authorize("/swagger-ui.html", permitAll)
                 authorize("/tables", permitAll)
+                authorize("/testtoken/**", permitAll)
                 authorize(anyRequest, authenticated)
             }
             oauth2ResourceServer {
