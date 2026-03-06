@@ -9,6 +9,8 @@ import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
 import org.springframework.stereotype.Component
 
+const val ACCESS_AS_APPLICATION_ROLE = "access_as_application"
+
 @Component
 class AzureJwtAuthenticationConverter(
     @param:Value("\${TEAMFAMILIE_FORVALTNING_GROUP_ID}") private val forvalterGroupId: String,
@@ -18,7 +20,6 @@ class AzureJwtAuthenticationConverter(
     companion object {
         private const val GROUPS_CLAIM = "groups"
         private const val ROLES_CLAIM = "roles"
-        private const val ACCESS_AS_APPLICATION_ROLE = "access_as_application"
     }
 
     override fun convert(jwt: Jwt): AbstractAuthenticationToken {
