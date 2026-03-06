@@ -1,6 +1,14 @@
 package no.nav.infotrygd.kontantstotte.model.ks
 
-import jakarta.persistence.*
+import jakarta.persistence.CascadeType
+import jakarta.persistence.Column
+import jakarta.persistence.Convert
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.JoinColumns
+import jakarta.persistence.OneToMany
+import jakarta.persistence.Table
 import no.nav.commons.foedselsnummer.Foedselsnummer
 import no.nav.infotrygd.kontantstotte.model.converters.ReversedFoedselNrConverter
 import no.nav.infotrygd.kontantstotte.utils.DatoFormat

@@ -2,6 +2,11 @@ package no.nav.infotrygd.kontantstotte.rest.filter
 
 import io.micrometer.core.instrument.MeterRegistry
 import io.micrometer.core.instrument.Tag
+import jakarta.servlet.FilterChain
+import jakarta.servlet.ServletRequest
+import jakarta.servlet.ServletResponse
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import no.nav.infotrygd.kontantstotte.utils.MdcHelper
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -9,37 +14,38 @@ import org.springframework.core.Ordered.LOWEST_PRECEDENCE
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.GenericFilterBean
-import java.util.*
-import jakarta.servlet.FilterChain
-import jakarta.servlet.ServletRequest
-import jakarta.servlet.ServletResponse
-import jakarta.servlet.http.HttpServletRequest
-import jakarta.servlet.http.HttpServletResponse
-
-
+import java.util.UUID
 
 @Component
 @Order(LOWEST_PRECEDENCE)
-class LogFilter(private val registry: MeterRegistry, @Value("\${spring.application.name}") private val applicationName: String) : GenericFilterBean() {
+class LogFilter(
+    private val registry: MeterRegistry,
+    @Value("\${spring.application.name}") private val applicationName: String,
+) : GenericFilterBean() {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    private val dontLog = setOf(
-        "/actuator/health",
-        "/actuator/prometheus",
-        "/actuator")
+    private val dontLog =
+        setOf(
+            "/actuator/health",
+            "/actuator/prometheus",
+            "/actuator",
+        )
 
-    override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
+    override fun doFilter(
+        request: ServletRequest,
+        response: ServletResponse,
+        chain: FilterChain,
+    ) {
         putValues(HttpServletRequest::class.java.cast(request))
         val req = request as HttpServletRequest
         val res = response as HttpServletResponse
         try {
             val millis = time { chain.doFilter(request, response) }
 
-            if(!dontLog.contains(req.requestURI)) {
+            if (!dontLog.contains(req.requestURI)) {
                 val host = req.getHeader("Host")
                 log.info("[${millis}ms]\t${res.status} ${req.method} ${req.requestURI} \t($host)")
             }
-
         } finally {
             MdcHelper.clear()
         }
@@ -66,8 +72,5 @@ class LogFilter(private val registry: MeterRegistry, @Value("\${spring.applicati
         }
     }
 
-    override fun toString(): String {
-        return javaClass.simpleName
-    }
-
+    override fun toString(): String = javaClass.simpleName
 }
