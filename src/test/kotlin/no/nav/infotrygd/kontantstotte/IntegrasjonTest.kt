@@ -5,6 +5,7 @@ import no.nav.infotrygd.kontantstotte.dto.InnsynResponse
 import no.nav.infotrygd.kontantstotte.repository.StonadRepository
 import no.nav.infotrygd.kontantstotte.security.ACCESS_AS_APPLICATION_ROLE
 import no.nav.infotrygd.kontantstotte.testutil.AbstractStonadFactoryTest
+import no.nav.infotrygd.kontantstotte.testutil.StonadFactory
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

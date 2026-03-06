@@ -1,21 +1,21 @@
 package no.nav.infotrygd.kontantstotte.model.converters
 
-import jakarta.persistence.AttributeConverter
 import org.slf4j.LoggerFactory
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import jakarta.persistence.AttributeConverter
 
-open class AbstractNavLocalDateConverter(
-    datePattern: String,
-) : AttributeConverter<LocalDate?, Int?> {
+
+open class AbstractNavLocalDateConverter(datePattern: String) : AttributeConverter<LocalDate?, Int?> {
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    private val formatter = DateTimeFormatter.ofPattern(datePattern)
-
-    override fun convertToDatabaseColumn(attribute: LocalDate?): Int? = attribute?.format(formatter)?.toInt()
+    private val formatter = DateTimeFormatter.ofPattern(datePattern);
+    override fun convertToDatabaseColumn(attribute: LocalDate?): Int? {
+        return attribute?.format(formatter)?.toInt()
+    }
 
     override fun convertToEntityAttribute(dbData: Int?): LocalDate? {
-        if (dbData == null || dbData == NULL_VALUE) {
+        if(dbData == null || dbData == NULL_VALUE) {
             return null
         }
         return try {
@@ -27,7 +27,7 @@ open class AbstractNavLocalDateConverter(
                 så vi returnerer et tomt resultat.
              */
             logger.warn("Kunne ikke lese dato: '$dbData'")
-            null
+            null;
         }
     }
 
