@@ -3,7 +3,6 @@ package no.nav.infotrygd.kontantstotte.testutil
 import no.nav.infotrygd.kontantstotte.model.ks.Barn
 import no.nav.infotrygd.kontantstotte.model.ks.Stonad
 import no.nav.infotrygd.kontantstotte.model.ks.Utbetaling
-import no.nav.infotrygd.kontantstotte.nextId
 import java.math.BigDecimal
 import java.time.YearMonth
 
