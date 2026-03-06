@@ -54,12 +54,6 @@ spec:
   accessPolicy:
     inbound:
       rules:
-        - application: "bidrag-grunnlag"
-          namespace: bidrag
-          cluster: prod-gcp
-        - application: "bidrag-grunnlag-feature"
-          namespace: bidrag
-          cluster: prod-gcp
         - application: "familie-ks-sak"
           namespace: teamfamilie
           cluster: prod-gcp
@@ -89,7 +83,7 @@ spec:
       singlePageApplication: true
   env:
     - name: "APP_DATASOURCE_URL"
-      value:  "jdbc:oracle:thin:@a01dbfl037.adeo.no:1521/infotrygd_ksp"
+      value:  "jdbc:oracle:thin:@a01dbfl060.adeo.no:1521/infotrygd_ksp_ha"
     - name: "APP_DATASOURCE_PLATFORM"
       value: "org.hibernate.dialect.OracleDialect"
     - name: "APP_DATASOURCE_DRIVER"
