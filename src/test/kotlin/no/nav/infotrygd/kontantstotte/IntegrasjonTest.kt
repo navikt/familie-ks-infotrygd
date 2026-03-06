@@ -1,9 +1,9 @@
 package no.nav.infotrygd.kontantstotte
 
-import no.nav.infotrygd.kontantstotte.config.ACCESS_AS_APPLICATION_ROLE
 import no.nav.infotrygd.kontantstotte.dto.InnsynRequest
 import no.nav.infotrygd.kontantstotte.dto.InnsynResponse
 import no.nav.infotrygd.kontantstotte.repository.StonadRepository
+import no.nav.infotrygd.kontantstotte.security.ACCESS_AS_APPLICATION_ROLE
 import no.nav.infotrygd.kontantstotte.testutil.AbstractStonadFactoryTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

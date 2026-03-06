@@ -1,4 +1,4 @@
-package no.nav.infotrygd.kontantstotte.config
+package no.nav.infotrygd.kontantstotte.security
 
 enum class Rolle(
     val beskrivelse: String,
