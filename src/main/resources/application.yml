@@ -18,7 +18,14 @@ spring:
   sql:
     init:
       platform: ${APP_DATASOURCE_PLATFORM}
-
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${AZURE_OPENID_CONFIG_ISSUER}
+          audiences:
+            - ${AZURE_APP_CLIENT_ID}
+            - api://${AZURE_APP_CLIENT_ID}
 
 management:
   endpoint:

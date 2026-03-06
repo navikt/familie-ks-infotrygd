@@ -2,6 +2,7 @@ package no.nav.infotrygd.kontantstotte
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
+import org.springframework.context.annotation.Profile
 import org.testcontainers.containers.GenericContainer
 import org.testcontainers.containers.Network
 import org.testcontainers.containers.wait.strategy.Wait
@@ -34,4 +35,5 @@ fun main(args: Array<String>) {
 }
 
 @SpringBootApplication
+@Profile("lokal")
 class ApplicationLocalMock
