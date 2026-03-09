@@ -22,6 +22,7 @@ open class SecurityConfiguration(
     @Bean
     open fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http {
+            cors { configurationSource = corsConfigurationSource() }
             authorizeHttpRequests {
                 authorize("/internal/**", permitAll)
                 authorize("/actuator/**", permitAll)
@@ -51,7 +52,7 @@ open class SecurityConfiguration(
                 "https://familie-ks-infotrygd.intern.nav.no",
                 "http://localhost:8080",
             )
-        configuration.allowedMethods = listOf("GET", "POST")
+        configuration.allowedMethods = listOf("GET", "POST", "OPTIONS")
         configuration.allowedHeaders =
             listOf(
                 "Content-Type",
