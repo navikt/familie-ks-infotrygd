@@ -1,7 +1,0 @@
-spring:
-  security:
-    oauth2:
-      resourceserver:
-        proxy:
-          host: "https://webproxy-nais.nav.no"
-          port: 8088
