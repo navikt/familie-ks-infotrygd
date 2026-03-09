@@ -29,17 +29,29 @@ class SwaggerConfig(
     val apiScope: String,
 ) {
     @Bean
+    @Profile("!lokal")
     fun kontantstøtteInfotrygdApi(): OpenAPI =
         OpenAPI()
             .info(Info().title("Kontantstøtte infotrygd API").version("v1"))
             .components(
                 Components()
-                    .addSecuritySchemes("oauth2", securitySchemes())
+                    .addSecuritySchemes("oauth2", securitySchemes()),
+            ).addSecurityItem(
+                SecurityRequirement()
+                    .addList("oauth2", listOf("read", "write")),
+            )
+
+    @Bean
+    @Profile("lokal")
+    fun kontantstøtteInfotrygdApiLokal(): OpenAPI =
+        OpenAPI()
+            .info(Info().title("Kontantstøtte infotrygd API").version("v1"))
+            .components(
+                Components()
                     .addSecuritySchemes("bearer", bearerTokenSecurityScheme()),
             ).addSecurityItem(
                 SecurityRequirement()
-                    .addList("oauth2", listOf("read", "write"))
-                    .addList("bearer", listOf("read", "write")),
+                    .addList("bearer"),
             )
 
     private fun securitySchemes(): SecurityScheme =

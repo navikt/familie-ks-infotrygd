@@ -38,19 +38,21 @@ class AzureJwtAuthenticationConverterTest {
     }
 
     @Test
-    fun `ukjent group og ingen roller kaster UtilstrekkeligTilgangException`() {
+    fun `ukjent group og ingen roller returnerer ingen roller`() {
         val jwt = buildJwt(groups = listOf("ukjent-gruppe"))
 
-        assertThatThrownBy { converter.convert(jwt) }
-            .isInstanceOf(UtilstrekkeligTilgangException::class.java)
+        val token = converter.convert(jwt)!!
+
+        assertThat(token.authorities).isEmpty()
     }
 
     @Test
-    fun `tom token uten claims kaster UtilstrekkeligTilgangException`() {
+    fun `tom token uten claims returnerer ingen roller`() {
         val jwt = buildJwt()
 
-        assertThatThrownBy { converter.convert(jwt) }
-            .isInstanceOf(UtilstrekkeligTilgangException::class.java)
+        val token = converter.convert(jwt)!!
+
+        assertThat(token.authorities).isEmpty()
     }
 
     private fun buildJwt(
@@ -61,7 +63,8 @@ class AzureJwtAuthenticationConverterTest {
         if (roles.isNotEmpty()) claims["roles"] = roles
         if (groups.isNotEmpty()) claims["groups"] = groups
 
-        return Jwt.withTokenValue("test-token")
+        return Jwt
+            .withTokenValue("test-token")
             .header("alg", "RS256")
             .claims { it.putAll(claims) }
             .issuedAt(Instant.now())

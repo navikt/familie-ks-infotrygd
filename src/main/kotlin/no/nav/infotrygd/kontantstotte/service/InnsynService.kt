@@ -58,7 +58,6 @@ class InnsynService(
 
     companion object {
         private val logger = LoggerFactory.getLogger(InnsynService::class.java)
-        private val secureLogger: Logger = LoggerFactory.getLogger("secureLogger")
     }
 }
 
@@ -67,12 +66,11 @@ data class SøkerOgBarn(
     val barnIdenter: List<String>,
 )
 
-private fun Stonad.toDto(): StonadDto {
-    return StonadDto(
+private fun Stonad.toDto(): StonadDto =
+    StonadDto(
         fnr = this.fnr,
         fom = this.fom,
         tom = this.tom,
         belop = this.belop,
         barn = this.barn.map { BarnDto(fnr = it.fnr) },
     )
-}

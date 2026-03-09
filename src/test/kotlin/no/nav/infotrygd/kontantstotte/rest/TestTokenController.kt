@@ -74,4 +74,26 @@ class TestTokenController(
             )
         return OAuth2Config().tokenProvider.accessToken(tokenRequest, issuerUrl.toHttpUrl(), tokenCallback, null).serialize()
     }
+
+    @PostMapping("/ingen-roller-token")
+    fun ingenRollerToken(): String {
+        val issuerUrl = "$baseEndpointUrl/$issuerName"
+        val tokenCallback =
+            DefaultOAuth2TokenCallback(
+                issuerId = "$baseEndpointUrl/$issuerName",
+                subject = UUID.randomUUID().toString(),
+                typeHeader = JOSEObjectType.JWT.type,
+                audience = listOf("test"),
+                expiry = 3600L,
+            )
+
+        val tokenRequest =
+            TokenRequest(
+                URI.create(baseEndpointUrl),
+                ClientSecretBasic(ClientID(issuerName), Secret("secret")),
+                AuthorizationCodeGrant(AuthorizationCode("12345678901"), URI.create("http://localhost")),
+                Scope("test"),
+            )
+        return OAuth2Config().tokenProvider.accessToken(tokenRequest, issuerUrl.toHttpUrl(), tokenCallback, null).serialize()
+    }
 }

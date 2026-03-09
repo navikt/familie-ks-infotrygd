@@ -1,6 +1,7 @@
 package no.nav.infotrygd.kontantstotte.security
 
 import no.nav.infotrygd.kontantstotte.security.Rolle
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.convert.converter.Converter
@@ -17,6 +18,7 @@ class AzureJwtAuthenticationConverter(
     @param:Value("\${TEAMFAMILIE_FORVALTNING_GROUP_ID}") private val forvalterGroupId: String,
 ) : Converter<Jwt, AbstractAuthenticationToken> {
     private val logger = LoggerFactory.getLogger(javaClass)
+    private val secureLogger: Logger = LoggerFactory.getLogger("secureLogger")
 
     companion object {
         private const val GROUPS_CLAIM = "groups"
@@ -34,26 +36,13 @@ class AzureJwtAuthenticationConverter(
             }
 
         if (roller.isEmpty()) {
-            logger.warn(
+            secureLogger.warn(
                 "Bruker har ingen gyldige roller. Grupper i token: ${grupper.joinToString(", ")}",
-            )
-            throw UtilstrekkeligTilgangException(
-                "Bruker har ikke tilgang til applikasjonen. Mangler påkrevde gruppemedlemskap.",
             )
         }
 
         val authorities = roller.map { SimpleGrantedAuthority(it.authority()) }
 
-        logger.info("Autentisert bruker med roller: ${roller.joinToString(", ")}")
-
         return JwtAuthenticationToken(jwt, authorities)
     }
 }
-
-class ManglendeClaimException(
-    message: String,
-) : RuntimeException(message)
-
-class UtilstrekkeligTilgangException(
-    message: String,
-) : RuntimeException(message)
