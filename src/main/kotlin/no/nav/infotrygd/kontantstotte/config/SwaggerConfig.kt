@@ -72,7 +72,7 @@ class SwaggerConfig(
 
     private fun bearerTokenSecurityScheme(): SecurityScheme =
         SecurityScheme()
-            .type(SecurityScheme.Type.APIKEY)
+            .type(SecurityScheme.Type.HTTP)
             .scheme("bearer")
             .bearerFormat("JWT")
             .`in`(SecurityScheme.In.HEADER)
