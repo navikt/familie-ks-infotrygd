@@ -17,7 +17,6 @@ const val ACCESS_AS_APPLICATION_ROLE = "access_as_application"
 class AzureJwtAuthenticationConverter(
     @param:Value("\${TEAMFAMILIE_FORVALTNING_GROUP_ID}") private val forvalterGroupId: String,
 ) : Converter<Jwt, AbstractAuthenticationToken> {
-    private val logger = LoggerFactory.getLogger(javaClass)
     private val secureLogger: Logger = LoggerFactory.getLogger("secureLogger")
 
     companion object {
