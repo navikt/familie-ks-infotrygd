@@ -3,7 +3,6 @@ package no.nav.infotrygd.kontantstotte.repository
 import jakarta.persistence.EntityManager
 import no.nav.infotrygd.kontantstotte.testutil.AbstractStonadFactoryTest
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
