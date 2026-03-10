@@ -5,7 +5,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class ReversedLongFoedselsnummerConverterTest {
-
     private val converter = ReversedLongFoedselNrConverter()
 
     @Test
@@ -21,7 +20,7 @@ class ReversedLongFoedselsnummerConverterTest {
 
         println()
 
-        assertThat(converter.convertToEntityAttribute(full)).isEqualTo(Foedselsnummer("01015450572"))  // TestData.foedselsNr(foedselsdato = LocalDate.of(1854, 1, 1))
+        assertThat(converter.convertToEntityAttribute(full)).isEqualTo(Foedselsnummer("01015450572")) // TestData.foedselsNr(foedselsdato = LocalDate.of(1854, 1, 1))
         assertThat(converter.convertToEntityAttribute(short)).isEqualTo(Foedselsnummer("01010000382")) // TestData.foedselsNr(LocalDate.of(1900, 1, 1))
         assertThat(converter.convertToEntityAttribute(0)).isNull()
     }

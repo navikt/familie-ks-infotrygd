@@ -8,13 +8,12 @@ import java.time.LocalDate
 object TestData {
     fun foedselsNr(
         foedselsdato: LocalDate? = null,
-        kjoenn: Kjoenn = Kjoenn.MANN): Foedselsnummer {
-
-        return fnrGenerator.foedselsnummer(
+        kjoenn: Kjoenn = Kjoenn.MANN,
+    ): Foedselsnummer =
+        fnrGenerator.foedselsnummer(
             foedselsdato = foedselsdato,
-            kjoenn = kjoenn
+            kjoenn = kjoenn,
         )
-    }
 
     private val fnrGenerator = FoedselsnummerGenerator()
 }

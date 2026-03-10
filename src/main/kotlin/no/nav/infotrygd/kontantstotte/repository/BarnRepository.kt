@@ -9,5 +9,4 @@ import java.math.BigDecimal
 @Repository
 interface BarnRepository : JpaRepository<Barn, BigDecimal> {
     fun findByFnrIn(fnr: List<Foedselsnummer>): List<Barn>
-
 }

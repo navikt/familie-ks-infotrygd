@@ -2,7 +2,9 @@ package no.nav.commons.foedselsnummer
 
 import com.fasterxml.jackson.annotation.JsonValue
 
-data class Foedselsnummer(@get:JsonValue val asString: String) {
+data class Foedselsnummer(
+    @get:JsonValue val asString: String,
+) {
     companion object {}
 
     init {
@@ -12,6 +14,6 @@ data class Foedselsnummer(@get:JsonValue val asString: String) {
     val kjoenn: Kjoenn
         get() {
             val kjoenn = asString[8].toInt()
-            return if(kjoenn % 2 == 0) Kjoenn.KVINNE else Kjoenn.MANN
+            return if (kjoenn % 2 == 0) Kjoenn.KVINNE else Kjoenn.MANN
         }
 }

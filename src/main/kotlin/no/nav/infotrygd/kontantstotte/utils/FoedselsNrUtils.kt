@@ -2,15 +2,12 @@ package no.nav.infotrygd.kontantstotte.utils
 
 import no.nav.commons.foedselsnummer.Foedselsnummer
 
-
 val Foedselsnummer.reversert: String
     get() {
         return reverse(asString)
     }
 
-fun Foedselsnummer.Companion.fraReversert(reversert: String): Foedselsnummer {
-    return Foedselsnummer(reverse(reversert))
-}
+fun Foedselsnummer.Companion.fraReversert(reversert: String): Foedselsnummer = Foedselsnummer(reverse(reversert))
 
 private val regex = """(\d\d)(\d\d)(\d\d)(\d{5})""".toRegex()
 

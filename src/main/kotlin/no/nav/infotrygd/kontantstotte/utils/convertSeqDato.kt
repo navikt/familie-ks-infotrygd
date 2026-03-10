@@ -8,7 +8,10 @@ enum class DatoFormat {
     YYYYMM,
 }
 
-fun fromSeqToYearMonthOrNull(seq: String?, format: DatoFormat): YearMonth? {
+fun fromSeqToYearMonthOrNull(
+    seq: String?,
+    format: DatoFormat,
+): YearMonth? {
     if (seq.isNullOrBlank()) {
         return null
     }
@@ -28,30 +31,34 @@ fun fromSeqToYearMonthOrNull(seq: String?, format: DatoFormat): YearMonth? {
 }
 
 fun parseYYYYMM(value: String): YearMonth {
-    val (aarStr, maanedStr) = try {
-        """^(\d\d\d\d)(\d\d)$""".toRegex().find(value)!!.destructured
-    } catch (e: Exception) {
-        throw DateTimeParseException("Kunne ikke parse dato. Forventet format MMYYYY.", value, 0)
-    }
+    val (aarStr, maanedStr) =
+        try {
+            """^(\d\d\d\d)(\d\d)$""".toRegex().find(value)!!.destructured
+        } catch (e: Exception) {
+            throw DateTimeParseException("Kunne ikke parse dato. Forventet format MMYYYY.", value, 0)
+        }
 
     return YearMonth.of(aarStr.toInt(), maanedStr.toInt())
 }
 
 fun parseMMYYYY(value: String): YearMonth {
-    val (maanedStr, aarStr) = try {
-        """^(\d\d)(\d\d\d\d)$""".toRegex().find(value)!!.destructured
-    } catch (e: Exception) {
-        throw DateTimeParseException("Kunne ikke parse dato. Forventet format MMYYYY.", value, 0)
-    }
+    val (maanedStr, aarStr) =
+        try {
+            """^(\d\d)(\d\d\d\d)$""".toRegex().find(value)!!.destructured
+        } catch (e: Exception) {
+            throw DateTimeParseException("Kunne ikke parse dato. Forventet format MMYYYY.", value, 0)
+        }
 
     return YearMonth.of(aarStr.toInt(), maanedStr.toInt())
 }
+
 fun parseMMYYYYOrNull(value: String?): YearMonth? {
-    val (maanedStr, aarStr) = try {
-        """^(\d\d)(\d\d\d\d)$""".toRegex().find(value!!)!!.destructured
-    } catch (e: Exception) {
-        return null
-    }
+    val (maanedStr, aarStr) =
+        try {
+            """^(\d\d)(\d\d\d\d)$""".toRegex().find(value!!)!!.destructured
+        } catch (e: Exception) {
+            return null
+        }
     return try {
         YearMonth.of(aarStr.toInt(), maanedStr.toInt())
     } catch (e: Exception) {

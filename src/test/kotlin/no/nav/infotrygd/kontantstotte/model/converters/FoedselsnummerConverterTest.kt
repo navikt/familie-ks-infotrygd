@@ -5,7 +5,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class FoedselsnummerConverterTest {
-
     private val converter = FoedselNrConverter()
 
     private val str = "01015450572" // TestData.foedselsNr(foedselsdato = LocalDate.of(1854, 1, 1))
