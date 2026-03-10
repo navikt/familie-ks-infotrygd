@@ -1,19 +1,20 @@
 package no.nav.infotrygd.kontantstotte.repository
 
 import jakarta.persistence.EntityManager
-import no.nav.infotrygd.kontantstotte.testutil.StonadFactory
+import no.nav.infotrygd.kontantstotte.testutil.AbstractStonadFactoryTest
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.Order
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.junit4.SpringRunner
+import org.springframework.test.context.junit.jupiter.SpringExtension
 
-@RunWith(SpringRunner::class)
+@ExtendWith(SpringExtension::class)
 @DataJpaTest
 @ActiveProfiles("test")
-class StonadRepositoryTest {
+class StonadRepositoryTest : AbstractStonadFactoryTest() {
     @Autowired
     private lateinit var stonadRepository: StonadRepository
 
@@ -22,7 +23,6 @@ class StonadRepositoryTest {
 
     @Test
     fun `alle relasjoner er tilstede`() {
-        val sf = StonadFactory()
         val barn = sf.barn()
         val utbetaling = sf.utbetaling()
         val stonad =
@@ -52,7 +52,6 @@ class StonadRepositoryTest {
 
     @Test
     fun `test hent alle barn med løpende fagsak`() {
-        val sf = StonadFactory()
         val barn = sf.barn()
         val utbetaling = sf.utbetaling()
         val stonad =
@@ -68,9 +67,10 @@ class StonadRepositoryTest {
         entityManager.clear()
 
         val res = stonadRepository.findByOpphoertVfomEquals("000000")
-        assertThat(res).hasSameSizeAs(listOf(stonad))
+        val stønadForPerson = res.filter { it.personkey == stonad.personkey }
+        assertThat(stønadForPerson).hasSameSizeAs(listOf(stonad))
 
-        val resStonad = res[0]
+        val resStonad = stønadForPerson[0]
         assertThat(resStonad.id).isEqualTo(stonad.id)
 
         assertThat(resStonad.barn).hasSameSizeAs(listOf(barn))

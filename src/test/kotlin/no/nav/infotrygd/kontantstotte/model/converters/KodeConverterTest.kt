@@ -3,7 +3,8 @@ package no.nav.infotrygd.kontantstotte.model.converters
 import no.nav.infotrygd.kontantstotte.exception.UkjentDatabaseverdiException
 import no.nav.infotrygd.kontantstotte.model.Kode
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 
 class KodeConverterTest {
@@ -24,9 +25,11 @@ class KodeConverterTest {
         assertThat(converter.convertToEntityAttribute("  ")).isNull()
     }
 
-    @Test(expected = UkjentDatabaseverdiException::class)
+    @Test()
     fun convertToEntityAttribute_Exception() {
-        converter.convertToEntityAttribute("XX")
+        assertThrows<UkjentDatabaseverdiException> {
+            converter.convertToEntityAttribute("XX")
+        }
     }
 
     @Test

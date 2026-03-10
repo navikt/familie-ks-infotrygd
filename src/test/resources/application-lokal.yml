@@ -1,0 +1,7 @@
+
+AZURE_APP_CLIENT_ID: test
+AZURE_APP_CLIENT_SECRET: secret
+
+vault:
+  password: "src/test/resources/vault/password"
+  username: "src/test/resources/vault/username"

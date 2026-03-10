@@ -19,6 +19,7 @@
         <logger name="secureLogger" level="INFO" additivity="false">
             <appender-ref ref="team-logs"/>
         </logger>
+
     </springProfile>
 
     <springProfile name="dev">
