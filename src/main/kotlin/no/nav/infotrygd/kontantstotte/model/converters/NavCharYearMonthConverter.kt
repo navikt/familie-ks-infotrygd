@@ -1,9 +1,9 @@
 package no.nav.infotrygd.kontantstotte.model.converters
 
-import org.slf4j.LoggerFactory
-import java.time.YearMonth
 import jakarta.persistence.AttributeConverter
 import jakarta.persistence.Converter
+import org.slf4j.LoggerFactory
+import java.time.YearMonth
 
 @Converter
 class NavCharYearMonthConverter : AttributeConverter<YearMonth?, String?> {
@@ -21,12 +21,13 @@ class NavCharYearMonthConverter : AttributeConverter<YearMonth?, String?> {
         if (dbData == null) {
             return null
         }
-        val (maanedStr, aarStr) = try {
-            """^(\d\d)(\d\d\d\d)$""".toRegex().find("%06d".format(dbData.toInt()))!!.destructured
-        } catch (e: Exception) {
-            logger.warn("Ukjent databaseverdi. Forventet år/måned på format MMYYYY, fikk: \"$dbData\"")
-            return null
-        }
+        val (maanedStr, aarStr) =
+            try {
+                """^(\d\d)(\d\d\d\d)$""".toRegex().find("%06d".format(dbData.toInt()))!!.destructured
+            } catch (e: Exception) {
+                logger.warn("Ukjent databaseverdi. Forventet år/måned på format MMYYYY, fikk: \"$dbData\"")
+                return null
+            }
 
         val (maaned, aar) = maanedStr.toInt() to aarStr.toInt()
         try {

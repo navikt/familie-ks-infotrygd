@@ -9,7 +9,6 @@ import no.nav.infotrygd.kontantstotte.dto.tilFoedselsnummere
 import no.nav.infotrygd.kontantstotte.model.ks.Stonad
 import no.nav.infotrygd.kontantstotte.repository.BarnRepository
 import no.nav.infotrygd.kontantstotte.repository.StonadRepository
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 

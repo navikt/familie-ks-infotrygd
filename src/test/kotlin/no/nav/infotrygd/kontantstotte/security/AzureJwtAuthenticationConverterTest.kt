@@ -1,7 +1,6 @@
 package no.nav.infotrygd.kontantstotte.security
 
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.springframework.security.oauth2.jwt.Jwt
 import java.time.Instant

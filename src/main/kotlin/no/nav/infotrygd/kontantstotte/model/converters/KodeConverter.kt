@@ -1,15 +1,18 @@
 package no.nav.infotrygd.kontantstotte.model.converters
 
+import jakarta.persistence.AttributeConverter
 import no.nav.infotrygd.kontantstotte.exception.UkjentDatabaseverdiException
 import no.nav.infotrygd.kontantstotte.model.Kode
-import jakarta.persistence.AttributeConverter
 
-abstract class KodeConverter<T : Kode>(private val koder: List<T>, val fieldSize: Int = 0, val padChar: Char = ' ') : AttributeConverter<T?, String?> {
-
+abstract class KodeConverter<T : Kode>(
+    private val koder: List<T>,
+    val fieldSize: Int = 0,
+    val padChar: Char = ' ',
+) : AttributeConverter<T?, String?> {
     private val blankValue: T? = koder.find { it.kode.isBlank() }
 
     override fun convertToDatabaseColumn(attribute: T?): String? {
-        if(attribute != null && attribute == blankValue) {
+        if (attribute != null && attribute == blankValue) {
             return "".padEnd(length = fieldSize)
         }
 
@@ -17,16 +20,16 @@ abstract class KodeConverter<T : Kode>(private val koder: List<T>, val fieldSize
     }
 
     override fun convertToEntityAttribute(dbData: String?): T? {
-        if(dbData == null) {
+        if (dbData == null) {
             return null
         }
 
-        if(dbData.isBlank()) {
+        if (dbData.isBlank()) {
             return blankValue
         }
 
         val normalisertKode = dbData.trim()
-        for(verdi in koder) {
+        for (verdi in koder) {
             if (verdi.kode == normalisertKode) {
                 return verdi
             }
