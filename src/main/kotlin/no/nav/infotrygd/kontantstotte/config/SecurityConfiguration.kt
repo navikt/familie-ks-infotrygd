@@ -1,53 +1,23 @@
 package no.nav.infotrygd.kontantstotte.config
 
 import no.nav.infotrygd.kontantstotte.security.AzureJwtAuthenticationConverter
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Profile
-import org.springframework.core.env.Environment
-import org.springframework.http.client.SimpleClientHttpRequestFactory
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.invoke
-import org.springframework.security.oauth2.jwt.JwtDecoder
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder
 import org.springframework.security.web.SecurityFilterChain
-import org.springframework.web.client.RestTemplate
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
-import java.net.InetSocketAddress
-import java.net.Proxy
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 open class SecurityConfiguration(
     private val azureJwtAuthenticationConverter: AzureJwtAuthenticationConverter,
-    private val environment: Environment,
-    @Value("\${AZURE_OPENID_CONFIG_ISSUER}") private val issuerUri: String,
 ) {
-    @Bean
-    open fun jwtDecoder(): JwtDecoder {
-        val restTemplate =
-            if (environment.activeProfiles.any { it in listOf("prod", "preprod") }) {
-                val factory =
-                    SimpleClientHttpRequestFactory().apply {
-                        setProxy(Proxy(Proxy.Type.HTTP, InetSocketAddress("webproxy-nais.nav.no", 8088)))
-                    }
-                RestTemplate(factory)
-            } else {
-                RestTemplate()
-            }
-
-        return NimbusJwtDecoder
-            .withIssuerLocation(issuerUri)
-            .restOperations(restTemplate)
-            .build()
-    }
-
     @Bean
     open fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http {
