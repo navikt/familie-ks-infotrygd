@@ -32,7 +32,7 @@ open class SecurityConfiguration(
     @Bean
     open fun jwtDecoder(): JwtDecoder {
         val restTemplate =
-            if (environment.activeProfiles.contains("prod")) {
+            if (environment.activeProfiles.any { it in listOf("prod", "preprod") }) {
                 val factory =
                     SimpleClientHttpRequestFactory().apply {
                         setProxy(Proxy(Proxy.Type.HTTP, InetSocketAddress("webproxy-nais.nav.no", 8088)))
