@@ -6,9 +6,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-
 class KodeConverterTest {
-
     private val converter = TestConverter()
 
     @Test
@@ -39,15 +37,20 @@ class KodeConverterTest {
         assertThat(bv.convertToEntityAttribute("  ")).isEqualTo(F.A)
     }
 
-    private enum class E(override val kode: String, override val tekst: String) : Kode {
+    private enum class E(
+        override val kode: String,
+        override val tekst: String,
+    ) : Kode {
         A("a", "aaa"),
         B("b", "bbb"),
     }
 
     private class TestConverter : KodeConverter<E>(E.values().toList(), fieldSize = 2)
 
-
-    private enum class F(override val kode: String, override val tekst: String) : Kode {
+    private enum class F(
+        override val kode: String,
+        override val tekst: String,
+    ) : Kode {
         A("", "aaa"),
         B("b", "bbb"),
     }

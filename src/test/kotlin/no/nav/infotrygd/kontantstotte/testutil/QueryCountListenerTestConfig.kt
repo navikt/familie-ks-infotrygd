@@ -12,25 +12,25 @@ import javax.sql.DataSource
 @TestConfiguration
 class QueryCountListenerTestConfig {
     @Bean
-    fun postProcessor(): BeanPostProcessor {
-        return DataSourcePostProcessor()
-    }
+    fun postProcessor(): BeanPostProcessor = DataSourcePostProcessor()
 
     private class DataSourcePostProcessor : BeanPostProcessor {
-        override fun postProcessAfterInitialization(bean: Any, beanName: String): Any? {
-            if(bean is DataSource) {
+        override fun postProcessAfterInitialization(
+            bean: Any,
+            beanName: String,
+        ): Any? {
+            if (bean is DataSource) {
                 return createProxy(bean)
             }
             return bean
         }
 
-        fun createProxy(original: DataSource): DataSource {
-            return ProxyDataSourceBuilder
+        fun createProxy(original: DataSource): DataSource =
+            ProxyDataSourceBuilder
                 .create(original)
                 .name("DataSourceProxy-QueryCountListener")
                 .listener(DataSourceQueryCountListener())
                 .build()
-        }
     }
 }
 

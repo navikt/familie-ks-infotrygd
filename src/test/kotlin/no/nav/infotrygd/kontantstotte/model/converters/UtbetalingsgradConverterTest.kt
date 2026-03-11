@@ -3,9 +3,7 @@ package no.nav.infotrygd.kontantstotte.model.converters
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-
 class UtbetalingsgradConverterTest {
-
     private val converter = UtbetalingsgradConverter()
 
     @Test
@@ -24,12 +22,18 @@ class UtbetalingsgradConverterTest {
         convertToEntityAttribute("100", 100)
     }
 
-    fun convertToEntityAttribute(input: String?, expected: Int?) {
+    fun convertToEntityAttribute(
+        input: String?,
+        expected: Int?,
+    ) {
         val result = converter.convertToEntityAttribute(input)
         assertThat(result).isEqualTo(expected)
     }
 
-    fun convertToDatabaseColumn(input: Int?, expected: String?) {
+    fun convertToDatabaseColumn(
+        input: Int?,
+        expected: String?,
+    ) {
         val result = converter.convertToDatabaseColumn(input)
         assertThat(result).isEqualTo(expected)
     }
