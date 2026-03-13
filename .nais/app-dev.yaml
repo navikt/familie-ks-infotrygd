@@ -45,7 +45,7 @@ spec:
       runtime: java
   ingresses:
   - https://familie-ks-infotrygd.dev-fss-pub.nais.io
-  - https://familie-ks-infotrygd.dev.intern.nav.no/
+  - https://familie-ks-infotrygd.intern.dev.nav.no/
   vault:
     enabled: true
     paths:
