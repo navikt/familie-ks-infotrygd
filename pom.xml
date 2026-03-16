@@ -16,7 +16,7 @@
 
 	<properties>
 		<java.version>25</java.version>
-		<kotlin.version>2.3.10</kotlin.version>
+		<kotlin.version>2.3.20</kotlin.version>
 		<testcontainers.version>2.0.3</testcontainers.version>
 		<springdoc-openapi.version>3.0.1</springdoc-openapi.version>
 		<logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
