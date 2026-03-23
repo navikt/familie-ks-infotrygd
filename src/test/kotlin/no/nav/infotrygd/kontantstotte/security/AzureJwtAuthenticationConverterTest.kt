@@ -6,7 +6,7 @@ import org.springframework.security.oauth2.jwt.Jwt
 import java.time.Instant
 
 class AzureJwtAuthenticationConverterTest {
-    private val forvalterGroupId = "c7e0b108-7ae6-432c-9ab4-946174c240c0"
+    private val forvalterGroupId = "c62e908a-cf20-4ad0-b7b3-3ff6ca4bf38b"
     private val converter = AzureJwtAuthenticationConverter(forvalterGroupId)
 
     @Test
