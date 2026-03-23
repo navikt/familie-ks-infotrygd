@@ -69,7 +69,7 @@ internal class IntegrasjonTest : AbstractStonadFactoryTest() {
                             .jwt {
                                 it.claim(
                                     "groups",
-                                    listOf("c7e0b108-7ae6-432c-9ab4-946174c240c0"),
+                                    listOf("c62e908a-cf20-4ad0-b7b3-3ff6ca4bf38b"),
                                 )
                             }.authorities(SimpleGrantedAuthority("ROLE_FORVALTER")),
                     )
