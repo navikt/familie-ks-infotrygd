@@ -17,7 +17,7 @@
 	<properties>
 		<java.version>25</java.version>
 		<kotlin.version>2.3.20</kotlin.version>
-		<testcontainers.version>2.0.4</testcontainers.version>
+		<testcontainers.version>2.0.5</testcontainers.version>
 		<springdoc-openapi.version>3.0.3</springdoc-openapi.version>
 		<logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
 		<logback-syslog4j.version>1.0.0</logback-syslog4j.version>
