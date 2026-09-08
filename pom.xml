@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.1.0</version>
+		<version>4.1.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>no.nav</groupId>
@@ -18,7 +18,7 @@
 		<java.version>25</java.version>
 		<kotlin.version>2.4.10</kotlin.version>
 		<testcontainers.version>2.0.5</testcontainers.version>
-		<springdoc-openapi.version>3.0.3</springdoc-openapi.version>
+		<springdoc-openapi.version>3.1.0</springdoc-openapi.version>
 		<logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
 		<logback-syslog4j.version>1.0.0</logback-syslog4j.version>
 		<db-util.version>1.0.7</db-util.version>
@@ -100,7 +100,7 @@
 		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
 			<artifactId>ojdbc10</artifactId>
-			<version>19.31.0.0</version>
+			<version>19.32.0.0</version>
 			<scope>runtime</scope>
 		</dependency>
 
@@ -145,7 +145,7 @@
         <dependency>
             <groupId>no.nav.security</groupId>
             <artifactId>mock-oauth2-server</artifactId>
-            <version>5.0.2</version>
+            <version>6.0.2</version>
             <scope>test</scope>
         </dependency>
 
