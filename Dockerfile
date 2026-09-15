@@ -1,4 +1,4 @@
-FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/jre:openjdk-25
+FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/jre:openjdk-25-dev
 
 COPY --chown=nonroot:nonroot ./target/familie-ks-infotrygd-0.0.1-SNAPSHOT.jar /app/app.jar
 
