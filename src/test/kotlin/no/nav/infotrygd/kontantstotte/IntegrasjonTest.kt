@@ -2,6 +2,7 @@ package no.nav.infotrygd.kontantstotte
 
 import no.nav.infotrygd.kontantstotte.dto.InnsynRequest
 import no.nav.infotrygd.kontantstotte.dto.InnsynResponse
+import no.nav.infotrygd.kontantstotte.integration.OracleTable
 import no.nav.infotrygd.kontantstotte.repository.StonadRepository
 import no.nav.infotrygd.kontantstotte.security.ACCESS_AS_APPLICATION_ROLE
 import no.nav.infotrygd.kontantstotte.testutil.AbstractStonadFactoryTest
@@ -107,6 +108,50 @@ internal class IntegrasjonTest : AbstractStonadFactoryTest() {
             .post("/api/hentPerioderMedKontantstøtteIInfotrygd") {
                 contentType = MediaType.APPLICATION_JSON
                 content = jsonMapper().writeValueAsString(InnsynRequest(barn = listOf(stonad.fnr.asString)))
+            }.andExpect {
+                status { isUnauthorized() }
+            }
+    }
+
+    @Test
+    fun `skal hente tabeller i default schema med application-rolle`() {
+        val result =
+            mockMvc
+                .get("/api/database-tables") {
+                    with(
+                        jwt()
+                            .jwt {
+                                it.claim("roles", listOf(ACCESS_AS_APPLICATION_ROLE))
+                            }.authorities(SimpleGrantedAuthority("ROLE_APPLICATION")),
+                    )
+                }.andExpect {
+                    status { isOk() }
+                }.andReturn()
+
+        val response: List<OracleTable> = jsonMapper().readValue(result.response.contentAsString)
+
+        assertThat(response)
+            .contains(
+                OracleTable(owner = "TEST", tableName = "KS_BARN_10"),
+                OracleTable(owner = "TEST", tableName = "KS_STONAD_20"),
+                OracleTable(owner = "TEST", tableName = "KS_UTBETALING_30"),
+            ).isSortedAccordingTo(compareBy(OracleTable::tableName))
+    }
+
+    @Test
+    fun `skal få forbidden for database-tabeller hvis man mangler rolle`() {
+        mockMvc
+            .get("/api/database-tables") {
+                with(jwt())
+            }.andExpect {
+                status { isForbidden() }
+            }
+    }
+
+    @Test
+    fun `skal få unauthorized for database-tabeller hvis man mangler token`() {
+        mockMvc
+            .get("/api/database-tables") {
             }.andExpect {
                 status { isUnauthorized() }
             }
