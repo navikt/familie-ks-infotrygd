@@ -17,6 +17,7 @@ spring:
       mode: always
       continue-on-error: true
 
+APP_DEFAULT_SCHEMA: TEST
 NAIS_APP_NAME: familie-ks-infotrygd
 AZURE_APP_CLIENT_ID: testid
 AZURE_APP_CLIENT_SECRET: testsecret
