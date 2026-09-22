@@ -3,12 +3,18 @@ name: Pull request
 on:
   pull_request:
 
+permissions:
+  contents: read
+  packages: read
+
 jobs:
   pull-request:
     name: Pull request
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # ratchet:actions/setup-java@v4
         with:
           distribution: 'temurin'
