@@ -23,7 +23,10 @@ open class SecurityConfiguration(
         http {
             cors { configurationSource = corsConfigurationSource() }
             authorizeHttpRequests {
-                authorize("/internal/**", permitAll)
+                authorize("/internal", permitAll)
+                authorize("/internal/health/**", permitAll)
+                authorize("/internal/metrics/**", permitAll)
+                authorize("/internal/prometheus", permitAll)
                 authorize("/actuator/**", permitAll)
                 authorize("/swagger-ui/**", permitAll)
                 authorize("/v3/api-docs/**", permitAll)
