@@ -29,12 +29,33 @@ spring:
 
 management:
   endpoint:
+    info:
+      access: none
     health:
-      show-details: ALWAYS
-  endpoints:
-    web:
-      exposure:
-        include: health,info,prometheus
+      show-details: always
+      probes.enabled: true
+      group:
+        readiness:
+          include:
+            - readinessState
+        liveness:
+          include:
+            - livenessState
+  info:
+    defaults:
+      enabled: false
+  endpoints.web:
+    exposure.include: health, metrics, prometheus
+    base-path: "/internal"
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
 
 #oidc...
 http.proxy.parametername: notused

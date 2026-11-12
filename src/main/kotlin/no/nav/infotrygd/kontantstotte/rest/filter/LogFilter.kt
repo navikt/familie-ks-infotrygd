@@ -26,9 +26,10 @@ class LogFilter(
 
     private val dontLog =
         setOf(
-            "/actuator/health",
-            "/actuator/prometheus",
-            "/actuator",
+            "/internal/health",
+            "/internal/health/liveness",
+            "/internal/health/readiness",
+            "/internal/prometheus",
         )
 
     override fun doFilter(
